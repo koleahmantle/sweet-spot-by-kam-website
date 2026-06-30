@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Sweet Spot by Kam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6ef;
+    --cream-deep: #f3ebda;
+    --cream-warm: #f6efe0;
+    --ink: #1f2a26;
+    --ink-soft: #5c615c;
+    --teal: #5a9b8e;
+    --teal-deep: #3f7a6e;
+    --teal-darkest: #1f3e3c;
+    --teal-bg: #e6efeb;
+    --gold: #d4a445;
+    --gold-soft: #e0b35a;
+    --line: #e5dcc8;
+    --shadow: 0 1px 3px rgba(31,42,38,0.04), 0 8px 24px rgba(31,42,38,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 246, 239, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 19px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo .by-kam {
+    font-style: italic;
+    color: var(--teal);
+    font-weight: 400;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: color 0.2s;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--teal) !important;
+    color: var(--cream) !important;
+    padding: 11px 22px;
+    border-radius: 999px;
+    letter-spacing: 0.14em !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--teal-deep) !important; }
+
+  @media (max-width: 720px) {
+    .nav-links { gap: 16px; }
+    .nav-links li:not(:last-child) { display: none; }
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 96px 0; }
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before { content: "✦"; color: var(--gold); font-size: 10px; }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  h1 { font-size: clamp(44px, 6.5vw, 76px); }
+  h2 { font-size: clamp(34px, 4.8vw, 56px); margin-bottom: 16px; }
+  h3 { font-size: 22px; font-weight: 700; }
+  h4 { font-size: 16px; font-weight: 600; }
+  .italic { font-style: italic; color: var(--teal); }
+
+  .hero {
+    padding: 64px 0 96px;
+    background: var(--cream-warm);
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--teal-bg);
+    padding: 8px 16px;
+    border-radius: 999px;
+    margin-bottom: 28px;
+  }
+  .hero-tag::before { content: "✦"; color: var(--gold); }
+  .hero p.lead {
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin: 28px 0 36px;
+    max-width: 470px;
+    line-height: 1.65;
+  }
+  .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.06em;
+  }
+  .btn-primary { background: var(--teal); color: var(--cream); }
+  .btn-primary:hover { background: var(--teal-deep); transform: translateY(-1px); }
+  .btn-link {
+    background: transparent;
+    color: var(--ink);
+    padding: 14px 4px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+  }
+  .btn-link:hover { color: var(--teal); }
+  .btn-gold { background: var(--gold); color: var(--ink); }
+  .btn-gold:hover { background: var(--gold-soft); transform: translateY(-1px); }
+
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+  .hero-visual::before {
+    content: '';
+    position: absolute;
+    inset: 8%;
+    background: radial-gradient(circle at center, rgba(90,155,142,0.12) 0%, rgba(90,155,142,0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  .hero-visual img {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 12px 32px rgba(31, 62, 60, 0.15));
+  }
+  .hero-badge {
+    position: absolute;
+    bottom: 8%;
+    right: 4%;
+    z-index: 2;
+    background: var(--gold);
+    padding: 10px 18px;
+    border-radius: 4px;
+    color: var(--ink);
+    font-size: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(20,62,54,0.12);
+  }
+  .hero-badge strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 1px;
+  }
+  .hero-badge span { color: var(--ink); font-size: 10px; font-weight: 500; }
+
+  @media (max-width: 860px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 64px; }
+    .hero-visual { aspect-ratio: 1/1; max-width: 480px; margin: 0 auto; }
+  }
+
+  .menu-header { text-align: center; max-width: 580px; margin: 0 auto 64px; }
+  .menu-header p { color: var(--ink-soft); font-size: 16px; margin-top: 16px; }
+  .menu-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  .menu-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .menu-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .menu-card-image {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: var(--cream-deep);
+  }
+  .menu-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .menu-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .menu-card .eyebrow { margin-bottom: 8px; font-size: 10px; }
+  .menu-card h3 { margin-bottom: 10px; font-size: 22px; }
+  .menu-card .desc {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin-bottom: 18px;
+    flex: 1;
+    line-height: 1.55;
+  }
+  .flavor-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .flavor-list span {
+    font-size: 11px;
+    padding: 4px 10px;
+    background: var(--cream-deep);
+    border-radius: 999px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .price-meta {
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .frosting-note {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .frosting-note strong { color: var(--ink); font-weight: 600; }
+
+  .menu-card.island {
+    background: var(--teal-darkest);
+    border-color: var(--teal-darkest);
+    color: var(--cream);
+  }
+  .menu-card.island .menu-card-image { background: #244a47; }
+  .menu-card.island .eyebrow { color: var(--gold); }
+  .menu-card.island .eyebrow::before { color: var(--gold); }
+  .menu-card.island h3 { color: var(--cream); }
+  .menu-card.island .desc { color: rgba(250,246,239,0.78); }
+  .menu-card.island .flavor-list span {
+    background: rgba(212,164,69,0.18);
+    color: var(--gold-soft);
+  }
+  .menu-card.island .price-row { border-top-color: rgba(250,246,239,0.18); }
+  .menu-card.island .price-tag {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .menu-card.island .price-meta { color: rgba(250,246,239,0.6); }
+
+  .menu-cta { text-align: center; margin-top: 40px; }
+
+  .kitchen-banner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 0;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+  .kitchen-banner-image {
+    overflow: hidden;
+    background: var(--cream-deep);
+  }
+  .kitchen-banner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 280px;
+  }
+  .kitchen-banner-body {
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kitchen-banner-body h3 {
+    font-size: 28px;
+    margin-bottom: 14px;
+  }
+  .kitchen-banner-body p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 760px) {
+    .menu-grid-4 { grid-template-columns: 1fr; }
+    .kitchen-banner { grid-template-columns: 1fr; }
+    .kitchen-banner-body { padding: 32px; }
+    .kitchen-banner-image img { min-height: 220px; }
+  }
+
+  .process { background: var(--teal-bg); }
+  .process-header { text-align: center; max-width: 580px; margin: 0 auto 64px; }
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .process-grid::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 16.66%;
+    right: 16.66%;
+    height: 1px;
+    background: var(--gold);
+    z-index: 0;
+  }
+  .step { text-align: center; position: relative; z-index: 1; }
+  .step-num {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 auto 24px;
+  }
+  .step:nth-child(2) .step-num { background: var(--gold); color: var(--ink); }
+  .step h3 { margin-bottom: 10px; }
+  .step p { color: var(--ink-soft); font-size: 14px; max-width: 240px; margin: 0 auto; }
+
+  .pickup-notice {
+    margin-top: 64px;
+    background: var(--cream);
+    border: 1px solid rgba(90,155,142,0.2);
+    border-radius: 8px;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .pickup-notice-icon { font-size: 24px; flex-shrink: 0; }
+  .pickup-notice strong {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+    font-size: 16px;
+  }
+  .pickup-notice span { color: var(--ink-soft); font-size: 14px; }
+
+  @media (max-width: 760px) {
+    .process-grid { grid-template-columns: 1fr; gap: 32px; }
+    .process-grid::before { display: none; }
+  }
+
+  .about { background: var(--cream-deep); }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    border: 1.5px dashed var(--teal);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--cream-deep);
+  }
+  .about-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .about-visual-badge {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: var(--gold);
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.3;
+    box-shadow: 0 4px 12px rgba(20,62,54,0.12);
+  }
+  .about-visual-badge strong {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    display: block;
+  }
+  .about-visual-badge span { color: var(--ink); font-size: 11px; font-weight: 500; }
+
+  .about p {
+    color: var(--ink-soft);
+    font-size: 16px;
+    margin-bottom: 18px;
+    line-height: 1.65;
+  }
+  .pull-quote {
+    background: var(--teal-darkest);
+    color: var(--cream);
+    padding: 22px 28px;
+    border-radius: 4px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.5;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 860px) {
+    .about-inner { grid-template-columns: 1fr; gap: 48px; }
+    .about-visual { max-width: 480px; margin: 0 auto; }
+  }
+
+  .forms-section { background: var(--cream-warm); }
+  .forms-header { text-align: center; max-width: 600px; margin: 0 auto 56px; }
+  .forms-header p { color: var(--ink-soft); font-size: 16px; margin-top: 14px; }
+
+  .form-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    padding: 11px 22px;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .tab-btn.active {
+    background: var(--teal);
+    color: var(--cream);
+    border-color: var(--teal);
+  }
+
+  .form-card {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 44px;
+  }
+  .form-card.hidden { display: none; }
+  .form-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+  .form-card > p {
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    font-size: 14px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label,
+  .form-row label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea,
+  .form-row input,
+  .form-row select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    background: var(--cream);
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus,
+  .form-row input:focus,
+  .form-row select:focus {
+    outline: none;
+    border-color: var(--teal);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 110px;
+    font-family: 'Inter', sans-serif;
+  }
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px;
+    background: var(--teal);
+    color: var(--cream);
+    border: none;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .form-submit:hover { background: var(--teal-deep); }
+  .form-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+  }
+  .form-note a { color: var(--teal); }
+
+  @media (max-width: 600px) {
+    .form-card { padding: 28px 22px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  .final-cta {
+    background: var(--teal-darkest);
+    color: var(--cream);
+    text-align: center;
+  }
+  .final-cta .eyebrow { color: var(--gold); }
+  .final-cta .eyebrow::before { color: var(--gold); }
+  .final-cta h2 { color: var(--cream); }
+  .final-cta .italic { color: var(--gold-soft); }
+  .final-cta-inner { max-width: 640px; margin: 0 auto; }
+  .final-cta p {
+    color: rgba(250,246,239,0.78);
+    font-size: 16px;
+    margin: 16px 0 32px;
+  }
+  .urgency-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    font-size: 13px;
+    color: rgba(250,246,239,0.7);
+  }
+
+  .contact { background: var(--cream); }
+  .contact-header { text-align: center; max-width: 600px; margin: 0 auto 56px; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .contact-card {
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    padding: 28px;
+    border-radius: 8px;
+  }
+  .contact-card .label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .contact-card a {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 17px;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.3;
+  }
+  .contact-card a + a {
+    margin-top: 4px;
+  }
+  .contact-card a:hover { color: var(--teal); }
+  .contact-card .meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .contact-card.cottage .label { color: var(--ink); }
+  .contact-card.cottage p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .contact-card.cottage strong {
+    font-family: 'Playfair Display', serif;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 15px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .contact-final {
+    margin-top: 40px;
+    background: var(--teal-bg);
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    max-width: 880px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .contact-final p {
+    color: var(--ink);
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 760px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+
+  footer {
+    background: #0f1614;
+    color: var(--cream);
+    padding: 32px 0;
+    text-align: center;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .footer-meta {
+    font-size: 13px;
+    color: rgba(250,246,239,0.6);
+    margin-bottom: 10px;
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(250,246,239,0.4);
+  }
+
+  .hp-field { display: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">The Sweet Spot <span class="by-kam">by Kam</span></a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#forms">Contact</a></li>
+      <li><a href="https://cash.app/order/$thesweetspotbykam" class="nav-cta">Order Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-tag">Minneapolis, MN · Pickup Thu–Sun</div>
+        <h1>Baked with <span class="italic">intention.</span><br/>Ordered with ease.</h1>
+        <p class="lead">Small-batch, made-to-order desserts crafted from bold flavors and Caribbean roots. Every order is fresh, every bite is intentional.</p>
+        <div class="hero-buttons">
+          <a href="https://cash.app/order/$thesweetspotbykam" class="btn btn-primary">Order Now →</a>
+          <a href="#menu" class="btn btn-link">View the Menu</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="images/The_Sweet_Spot_by_Kam_logo.png" alt="The Sweet Spot by Kam logo" />
+        <div class="hero-badge">
+          <strong>Pre-Order</strong>
+          <span>Limited weekly batches</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="menu" style="background: var(--cream-deep);">
+  <div class="container">
+    <div class="menu-header">
+      <div class="eyebrow">This Week's Menu</div>
+      <h2>Made fresh. <span class="italic">Made for you.</span></h2>
+      <p>Every item is baked to order in small batches. Choose your flavor, pick your size, and reserve your pickup.</p>
+    </div>
+
+    <div class="menu-grid-4">
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="images/brownies.jpeg" alt="Fudgy brownies" /></div>
+        <div class="menu-card-body">
+          <div class="eyebrow">Brownies</div>
+          <h3>Fudgy Brownies</h3>
+          <p class="desc">Fudgy centers, crisp edges, rich and deeply satisfying. Baked fresh weekly in your choice of flavor.</p>
+          <div class="flavor-list">
+            <span>Classic Fudge</span>
+            <span>Turtle</span>
+          </div>
+          <div class="price-row">
+            <span class="price">$30</span>
+            <span class="price-meta">12 Pack</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="images/peanut_butter_cookies.png" alt="Signature peanut butter cookies" /></div>
+        <div class="menu-card-body">
+          <div class="eyebrow">Cookies</div>
+          <h3>Signature Cookies</h3>
+          <p class="desc">Soft, chewy, and loaded with flavor. Choose a classic or try the monthly rotating feature.</p>
+          <div class="flavor-list">
+            <span>Brown Butter Chocolate</span>
+            <span>Peanut Butter</span>
+            <span>Monthly Feature</span>
+          </div>
+          <div class="price-row">
+            <span class="price">$30</span>
+            <span class="price-meta">12 Pack</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="menu-card-image"><img src="images/mult_lemon_cupcakes.jpeg" alt="Lemon cupcakes" /></div>
+        <div class="menu-card-body">
+          <div class="eyebrow">Cupcakes</div>
+          <h3>Cupcakes</h3>
+          <p class="desc">Light, perfectly balanced, and finished with your choice of Ermine or Ganache frosting.</p>
+          <div class="flavor-list">
+            <span>Vanilla</span>
+            <span>Chocolate</span>
+            <span>Lemon</span>
+          </div>
+          <div class="frosting-note">Frosting: <strong>Ermine</strong> (included) · <strong>Ganache</strong> +$4</div>
+          <div class="price-row">
+            <span class="price">$24 – $48</span>
+            <span class="price-meta">6 / 12 Pack</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-card island">
+        <div class="menu-card-image"><img src="images/Bulla_Cake.webp" alt="Jamaican Bulla cake" /></div>
+        <div class="menu-card-body">
+          <div class="eyebrow">Island Classics</div>
+          <h3>Jamaican-Inspired</h3>
+          <p class="desc">A nod to home. Warm spice, coconut, and molasses — deeply comforting, less sweet, rich in tradition. Featuring Bulla cake and other rotating selections.</p>
+          <div class="flavor-list">
+            <span>Bulla Cake</span>
+            <span>Rotating Selection</span>
+          </div>
+          <div class="price-row">
+            <span class="price-tag">Always Available</span>
+            <span class="price-meta">Ask for current selection</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-cta">
+      <a href="https://cash.app/order/$thesweetspotbykam" class="btn btn-primary">Place Your Order →</a>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="how">
+  <div class="container">
+    <div class="process-header">
+      <div class="eyebrow">The Process</div>
+      <h2>Simple. Seamless. <span class="italic">Always fresh.</span></h2>
+    </div>
+    <div class="process-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Order Online</h3>
+        <p>Browse the menu and place your order through Square. Select your flavors and pack size.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Baked Fresh</h3>
+        <p>Your order is baked fresh, just for you. Small batches, never pre-made, always made with care.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Pickup &amp; Enjoy</h3>
+        <p>Pickup details are sent after order confirmation. Come grab your order and dig in.</p>
+      </div>
+    </div>
+    <div class="pickup-notice">
+      <div class="pickup-notice-icon">📅</div>
+      <div>
+        <strong>Pickup is available Thursday through Sunday</strong>
+        <span>Limited quantities each week — orders fill up fast. Place yours early to secure your batch.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-visual">
+        <img src="images/cottage_bakery_station.jpeg" alt="The Sweet Spot by Kam cottage bakery" />
+        <div class="about-visual-badge">
+          <strong>Minneapolis, MN</strong>
+          <span>Cottage Bakery</span>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="eyebrow">Our Story</div>
+        <h2>Where comfort <span class="italic">meets craft.</span></h2>
+        <p>The Sweet Spot is a small-batch bakery centered on balance, warmth, and thoughtful baking. Every dessert is made to feel both comforting and refined.</p>
+        <p>Inspired by Jamaican roots and the flavors of home — warm spice, coconut, molasses — alongside classic favorites elevated with intention.</p>
+        <div class="pull-quote">"Here, dessert is meant to feel special while still welcoming — a small luxury shared with heart."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="forms-section" id="forms">
+  <div class="container">
+    <div class="forms-header">
+      <div class="eyebrow">Reach Out</div>
+      <h2>Send us <span class="italic">a note.</span></h2>
+      <p>Have a question or want to inquire about a custom order? We'd love to hear from you.</p>
+    </div>
+
+    <div class="form-tabs">
+      <button class="tab-btn active" data-tab="contact">General Contact</button>
+      <button class="tab-btn" data-tab="order">Order Inquiry</button>
+    </div>
+
+    <div class="form-card" id="form-contact">
+      <h3>General Contact</h3>
+      <p>Have a question? Drop us a message and we'll get back to you soon.</p>
+      <form action="https://formspree.io/f/xdarljzl" method="POST">
+        <input type="hidden" name="_subject" value="New Contact Message — The Sweet Spot by Kam" />
+        <input type="hidden" name="_next" value="https://thesweetspotbykam.com/thank-you.html" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <div class="form-row">
+          <div>
+            <label for="contact-name">Name</label>
+            <input type="text" id="contact-name" name="Name" required />
+          </div>
+          <div>
+            <label for="contact-email">Email</label>
+            <input type="email" id="contact-email" name="Email" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="contact-phone">Phone (optional)</label>
+          <input type="tel" id="contact-phone" name="Phone" />
+        </div>
+        <div class="form-group">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="Message" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+        <p class="form-note">We'll reply within 24–48 hours.</p>
+      </form>
+    </div>
+
+    <div class="form-card hidden" id="form-order">
+      <h3>Order Inquiry</h3>
+      <p>Planning a custom order or have questions about availability? Fill this out and we'll be in touch.</p>
+      <form action="https://formspree.io/f/mzdlawgw" method="POST">
+        <input type="hidden" name="_subject" value="New Order Inquiry — The Sweet Spot by Kam" />
+        <input type="hidden" name="_next" value="https://thesweetspotbykam.com/thank-you.html" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <div class="form-row">
+          <div>
+            <label for="order-name">Name</label>
+            <input type="text" id="order-name" name="Name" required />
+          </div>
+          <div>
+            <label for="order-email">Email</label>
+            <input type="email" id="order-email" name="Email" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="order-phone">Phone</label>
+            <input type="tel" id="order-phone" name="Phone" required />
+          </div>
+          <div>
+            <label for="order-pickup">Preferred Pickup Date</label>
+            <input type="date" id="order-pickup" name="Pickup Date" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="order-item">Item</label>
+            <select id="order-item" name="Item" required>
+              <option value="">Select an item</option>
+              <option value="Brownies">Brownies</option>
+              <option value="Cookies">Cookies</option>
+              <option value="Cupcakes">Cupcakes</option>
+              <option value="Island Classics (Bulla / Jamaican)">Island Classics (Bulla / Jamaican)</option>
+              <option value="Custom / Multiple Items">Custom / Multiple Items</option>
+            </select>
+          </div>
+          <div>
+            <label for="order-quantity">Quantity</label>
+            <input type="text" id="order-quantity" name="Quantity" placeholder="e.g., 1 dozen, 24 cupcakes" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="order-notes">Order Details &amp; Notes</label>
+          <textarea id="order-notes" name="Order Details" placeholder="Flavors, occasion, allergies, special requests..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Inquiry</button>
+        <p class="form-note">For immediate orders, use the <a href="https://cash.app/order/$thesweetspotbykam">Square order link</a>.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="container">
+    <div class="final-cta-inner">
+      <div class="eyebrow">Ready to Order?</div>
+      <h2>Batches fill up fast. <span class="italic">Don't miss yours.</span></h2>
+      <p>Pre-orders are the only way to get your hands on a batch. Place your order now and pick up Thu–Sun.</p>
+      <a href="https://cash.app/order/$thesweetspotbykam" class="btn btn-gold">Order Now →</a>
+      <div class="urgency-note">⚡ Limited quantities available each week</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-header">
+      <div class="eyebrow">Get in Touch</div>
+      <h2>Questions? <span class="italic">We've got you.</span></h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="label">Phone · Text Preferred</div>
+        <a href="tel:6124702966">612-470-2966</a>
+        <div class="meta">Texting is the fastest way to reach us</div>
+      </div>
+      <div class="contact-card">
+        <div class="label">Email</div>
+        <a href="mailto:hello@thesweetspotbykam.com">hello@thesweetspotbykam.com</a>
+        <div class="meta">For inquiries, custom orders, and questions</div>
+      </div>
+      <div class="contact-card">
+        <div class="label">Socials</div>
+        <a href="https://www.instagram.com/thesweetspot_bykam/" target="_blank" rel="noopener">Instagram · @thesweetspot_bykam</a>
+        <a href="https://www.facebook.com/profile.php?id=61586974556222" target="_blank" rel="noopener">Facebook · The Sweet Spot by Kam</a>
+        <div class="meta">Follow for menu drops &amp; weekly updates</div>
+      </div>
+      <div class="contact-card">
+        <div class="label">Location</div>
+        <a href="#" style="cursor:default;">Minneapolis, Minnesota</a>
+        <div class="meta">Pickup address sent after order confirmation</div>
+      </div>
+      <div class="contact-card cottage" style="grid-column: 1 / -1;">
+        <strong>Cottage Food Notice</strong>
+        <p>These products are homemade and not subject to state inspection. Made in a home kitchen in Minneapolis, Minnesota, under Minnesota's Cottage Food Law.</p>
+      </div>
+    </div>
+
+    <div class="contact-final">
+      <p>Ready to place your order? Browse the full menu and pay securely through Square.</p>
+      <a href="https://cash.app/order/$thesweetspotbykam" class="btn btn-primary">Go to Order Form →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">The Sweet Spot by Kam</div>
+    <div class="footer-meta">Minneapolis, MN · Pickup Thu–Sun · Pre-Order Only</div>
+    <div class="footer-copy">© 2026 The Sweet Spot by Kam · All rights reserved</div>
+  </div>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const cards = { contact: document.getElementById('form-contact'), order: document.getElementById('form-order') };
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.tab;
+      Object.entries(cards).forEach(([key, el]) => {
+        if (key === target) el.classList.remove('hidden');
+        else el.classList.add('hidden');
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
