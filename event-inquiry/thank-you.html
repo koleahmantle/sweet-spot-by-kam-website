@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thank You — The Sweet Spot by Kam</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6ef;
+    --cream-deep: #f3ebda;
+    --cream-warm: #f6efe0;
+    --ink: #1f2a26;
+    --ink-soft: #5c615c;
+    --teal: #5a9b8e;
+    --teal-deep: #3f7a6e;
+    --teal-darkest: #1f3e3c;
+    --teal-bg: #e6efeb;
+    --gold: #d4a445;
+    --gold-soft: #e0b35a;
+    --line: #e5dcc8;
+    --shadow: 0 1px 3px rgba(31,42,38,0.04), 0 8px 24px rgba(31,42,38,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  nav {
+    background: rgba(250, 246, 239, 0.94);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 19px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo .by-kam { font-style: italic; color: var(--teal); font-weight: 400; }
+  .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: color 0.2s;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--teal) !important;
+    color: var(--cream) !important;
+    padding: 11px 22px;
+    border-radius: 999px;
+    letter-spacing: 0.14em !important;
+  }
+  .nav-cta:hover { background: var(--teal-deep) !important; }
+  @media (max-width: 720px) {
+    .nav-links { gap: 16px; }
+    .nav-links li:not(:last-child) { display: none; }
+    .nav-inner { padding: 0 22px; }
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 88px 32px;
+    background: var(--cream-warm);
+  }
+  @media (max-width: 720px) { main { padding: 56px 22px; } }
+
+  .panel {
+    max-width: 640px;
+    width: 100%;
+    text-align: center;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 56px 48px;
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 600px) { .panel { padding: 36px 24px; } }
+
+  .icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--cream-deep);
+    color: var(--gold);
+    margin: 0 auto 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before { content: "✦"; color: var(--gold); font-size: 10px; }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    margin-bottom: 18px;
+  }
+  h1 .italic { font-style: italic; color: var(--teal-deep); }
+  @media (max-width: 600px) { h1 { font-size: 30px; } }
+
+  .message {
+    color: var(--ink-soft);
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 600px) { .message { font-size: 16px; } }
+
+  .recap {
+    display: none;
+    background: var(--teal-bg);
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--teal-darkest);
+    margin-bottom: 28px;
+    text-align: left;
+    line-height: 1.7;
+  }
+  .recap.show { display: block; }
+  .recap strong { font-weight: 600; }
+
+  .photo-note {
+    display: none;
+    background: var(--cream-deep);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 28px;
+    line-height: 1.65;
+  }
+  .photo-note.show { display: block; }
+  .photo-note a { color: var(--teal-deep); }
+
+  .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.06em;
+  }
+  .btn-primary { background: var(--teal); color: var(--cream); }
+  .btn-primary:hover { background: var(--teal-deep); transform: translateY(-1px); }
+  .btn-secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn-secondary:hover { background: var(--ink); color: var(--cream); }
+  @media (max-width: 480px) {
+    .actions { flex-direction: column; }
+    .btn { justify-content: center; }
+  }
+
+  .followup {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .followup a { color: var(--teal-deep); }
+
+  footer {
+    background: var(--teal-darkest);
+    color: var(--cream);
+    padding: 44px 0 36px;
+    text-align: center;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .footer-meta { font-size: 13px; color: rgba(250,246,239,0.7); margin-bottom: 18px; }
+  .footer-copy { font-size: 12px; color: rgba(250,246,239,0.4); }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">The Sweet Spot <span class="by-kam">by Kam</span></a>
+    <ul class="nav-links">
+      <li><a href="/#menu">Menu</a></li>
+      <li><a href="/#how">How It Works</a></li>
+      <li><a href="/#about">Our Story</a></li>
+      <li><a href="/event-inquiry">Events</a></li>
+      <li><a href="/#forms">Contact</a></li>
+      <li><a href="https://cash.app/order/$thesweetspotbykam" class="nav-cta">Order Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <!-- Confirmed state: shown after a successful submission. -->
+  <div class="panel" id="panel-confirmed" hidden>
+    <div class="icon">✦</div>
+    <div class="eyebrow">Inquiry Received</div>
+    <h1>Thank You for Thinking of <span class="italic">The Sweet Spot by Kam</span></h1>
+    <p class="message">Your inquiry has been received, and I'm so excited to learn more about your event. I'll review your details and follow up with you soon regarding availability, options, and pricing.</p>
+
+    <div class="recap" id="recap"></div>
+
+    <div class="photo-note" id="photo-note">
+      <strong>One quick thing —</strong> inspiration photos can't be attached to the form just yet. Please email your image to <a href="mailto:hello@thesweetspotbykam.com">hello@thesweetspotbykam.com</a> and I'll match it to your inquiry.
+    </div>
+
+    <div class="actions">
+      <a href="/" class="btn btn-primary">Return to Home</a>
+      <a href="/#menu" class="btn btn-secondary">Browse Offerings</a>
+    </div>
+
+    <p class="followup">Haven't heard from me in a few days? Text <a href="tel:6124702966">612-470-2966</a>.</p>
+  </div>
+
+  <!-- Fallback state: shown when someone lands here without submitting. -->
+  <div class="panel" id="panel-direct" hidden>
+    <div class="icon">✦</div>
+    <div class="eyebrow">Event Inquiries</div>
+    <h1>Planning something <span class="italic">special?</span></h1>
+    <p class="message">This page confirms event inquiries once they've been sent. There's no inquiry to show here right now — if you'd like to tell me about your celebration, the form takes just a few minutes.</p>
+
+    <div class="actions">
+      <a href="/event-inquiry" class="btn btn-primary">Start an Event Inquiry</a>
+      <a href="/" class="btn btn-secondary">Return to Home</a>
+    </div>
+
+    <p class="followup">Already sent one in? It's on its way — I'll be in touch. You can also reach me at <a href="mailto:hello@thesweetspotbykam.com">hello@thesweetspotbykam.com</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">The Sweet Spot by Kam</div>
+    <div class="footer-meta">Minneapolis, MN · Pickup Thu–Sun · Pre-Order Only</div>
+    <div class="footer-copy">© 2026 The Sweet Spot by Kam · All rights reserved</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'ssbk:event-inquiry';
+  var confirmed = document.getElementById('panel-confirmed');
+  var direct = document.getElementById('panel-direct');
+
+  var record = null;
+  try {
+    var raw = sessionStorage.getItem(STORAGE_KEY);
+    if (raw) record = JSON.parse(raw);
+  } catch (e) {
+    record = null;
+  }
+
+  if (!record) {
+    direct.hidden = false;
+    document.title = 'Event Inquiries — The Sweet Spot by Kam';
+    return;
+  }
+
+  confirmed.hidden = false;
+
+  // A short recap so the customer can see exactly what came through.
+  var bits = [];
+  if (record.name) bits.push(['Name', record.name]);
+  if (record.eventType) bits.push(['Event', record.eventType]);
+  if (record.eventDate) {
+    var parts = record.eventDate.split('-');
+    var d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+    bits.push(['Date', isNaN(d) ? record.eventDate : d.toLocaleDateString(undefined, {
+      year: 'numeric', month: 'long', day: 'numeric'
+    })]);
+  }
+
+  if (bits.length) {
+    var recap = document.getElementById('recap');
+    bits.forEach(function (pair) {
+      var line = document.createElement('div');
+      var label = document.createElement('strong');
+      label.textContent = pair[0] + ': ';
+      line.appendChild(label);
+      line.appendChild(document.createTextNode(pair[1]));
+      recap.appendChild(line);
+    });
+    recap.classList.add('show');
+  }
+
+  if (record.imagePending) {
+    document.getElementById('photo-note').classList.add('show');
+  }
+})();
+</script>
+
+</body>
+</html>

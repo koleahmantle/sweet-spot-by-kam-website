@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Event Inquiry — The Sweet Spot by Kam</title>
+<meta name="description" content="Share the details of your wedding, birthday, shower, graduation, church or corporate event and Kam will follow up with availability, options, and pricing." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6ef;
+    --cream-deep: #f3ebda;
+    --cream-warm: #f6efe0;
+    --ink: #1f2a26;
+    --ink-soft: #5c615c;
+    --teal: #5a9b8e;
+    --teal-deep: #3f7a6e;
+    --teal-darkest: #1f3e3c;
+    --teal-bg: #e6efeb;
+    --gold: #d4a445;
+    --gold-soft: #e0b35a;
+    --line: #e5dcc8;
+    --error: #b1483a;
+    --error-bg: #fbeeec;
+    --shadow: 0 1px 3px rgba(31,42,38,0.04), 0 8px 24px rgba(31,42,38,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 246, 239, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 19px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo .by-kam { font-style: italic; color: var(--teal); font-weight: 400; }
+  .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: color 0.2s;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--teal) !important;
+    color: var(--cream) !important;
+    padding: 11px 22px;
+    border-radius: 999px;
+    letter-spacing: 0.14em !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--teal-deep) !important; }
+
+  @media (max-width: 720px) {
+    .nav-links { gap: 16px; }
+    .nav-links li:not(:last-child) { display: none; }
+    .nav-inner { padding: 0 22px; }
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 96px 0; }
+  @media (max-width: 720px) {
+    .container { padding: 0 22px; }
+    section { padding: 64px 0; }
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before { content: "✦"; color: var(--gold); font-size: 10px; }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .italic { font-style: italic; font-weight: 400; color: var(--teal-deep); }
+
+  /* ---------- Page header ---------- */
+  .inquiry-head {
+    background: var(--cream-deep);
+    padding: 72px 0 64px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .inquiry-head h1 {
+    font-size: 46px;
+    font-weight: 400;
+    margin-bottom: 22px;
+  }
+  .inquiry-head .intro {
+    max-width: 620px;
+    margin: 0 auto;
+    color: var(--ink-soft);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  @media (max-width: 720px) {
+    .inquiry-head { padding: 48px 0 44px; }
+    .inquiry-head h1 { font-size: 32px; }
+    .inquiry-head .intro { font-size: 16px; }
+  }
+
+  /* ---------- Form shell ---------- */
+  .forms-section { background: var(--cream-warm); padding: 72px 0 96px; }
+  .form-card {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 44px;
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 600px) { .form-card { padding: 28px 22px; } }
+
+  .fieldset { border: 0; margin: 0 0 36px; padding: 0; }
+  .fieldset:last-of-type { margin-bottom: 24px; }
+  .fieldset > legend {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    padding: 0;
+    margin-bottom: 4px;
+  }
+  .fieldset > .legend-note {
+    color: var(--ink-soft);
+    font-size: 13px;
+    margin-bottom: 22px;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-group { margin-bottom: 16px; }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group label,
+  .form-row label,
+  .group-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .req { color: var(--gold); margin-left: 3px; font-weight: 700; }
+  .optional {
+    color: var(--ink-soft);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: none;
+    font-size: 11px;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="tel"],
+  .form-group input[type="date"],
+  .form-group input[type="number"],
+  .form-group select,
+  .form-group textarea,
+  .form-row input,
+  .form-row select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    background: var(--cream);
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .form-group select, .form-row select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235c615c' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .form-group input[type="date"] { min-height: 46px; }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus,
+  .form-row input:focus,
+  .form-row select:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(90,155,142,0.14);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 110px;
+    font-family: 'Inter', sans-serif;
+  }
+  .hint { font-size: 12px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
+
+  /* ---------- Checkbox group ---------- */
+  .choice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  @media (max-width: 600px) { .choice-grid { grid-template-columns: 1fr; } }
+  .form-group label.choice {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--cream);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 14px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0;
+  }
+  .form-group label.choice:hover { border-color: var(--teal); }
+  .form-group label.choice input { width: 16px; height: 16px; accent-color: var(--teal); cursor: pointer; flex-shrink: 0; }
+  .form-group label.choice.checked { border-color: var(--teal); background: var(--teal-bg); }
+
+  /* ---------- File field ---------- */
+  .file-field {
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    padding: 18px;
+    background: var(--cream);
+    text-align: center;
+  }
+  .file-field input[type="file"] { display: none; }
+  .file-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .file-trigger:hover { background: var(--ink); color: var(--cream); }
+  .file-name { font-size: 13px; color: var(--ink-soft); margin-top: 10px; word-break: break-word; }
+  .file-clear {
+    background: none;
+    border: 0;
+    color: var(--teal-deep);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 6px;
+  }
+
+  /* ---------- Conditional reveal ---------- */
+  .conditional { display: none; }
+  .conditional.show { display: block; }
+
+  /* ---------- Errors ---------- */
+  .field-error {
+    display: none;
+    color: var(--error);
+    font-size: 12.5px;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .field-error.show { display: block; }
+  .has-error input,
+  .has-error select,
+  .has-error textarea,
+  .has-error .file-field { border-color: var(--error) !important; }
+  .has-error input:focus,
+  .has-error select:focus,
+  .has-error textarea:focus { box-shadow: 0 0 0 3px rgba(177,72,58,0.14); }
+  .has-error .group-label { color: var(--error); }
+
+  .form-alert {
+    display: none;
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 26px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .form-alert.show { display: block; }
+  .form-alert.error {
+    background: var(--error-bg);
+    border: 1px solid rgba(177,72,58,0.3);
+    color: var(--error);
+  }
+  .form-alert strong { display: block; margin-bottom: 4px; font-weight: 600; }
+  .form-alert a { color: inherit; }
+
+  /* ---------- Submit ---------- */
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+    padding: 15px;
+    background: var(--teal);
+    color: var(--cream);
+    border: none;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .form-submit:hover:not(:disabled) { background: var(--teal-deep); }
+  .form-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+  .form-note { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 14px; }
+  .form-note a { color: var(--teal); }
+
+  .hp-field { display: none; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: var(--teal-darkest);
+    color: var(--cream);
+    padding: 56px 0 44px;
+    text-align: center;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .footer-meta { font-size: 13px; color: rgba(250,246,239,0.7); margin-bottom: 18px; }
+  .footer-copy { font-size: 12px; color: rgba(250,246,239,0.4); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">The Sweet Spot <span class="by-kam">by Kam</span></a>
+    <ul class="nav-links">
+      <li><a href="/#menu">Menu</a></li>
+      <li><a href="/#how">How It Works</a></li>
+      <li><a href="/#about">Our Story</a></li>
+      <li><a href="/event-inquiry">Events</a></li>
+      <li><a href="/#forms">Contact</a></li>
+      <li><a href="https://cash.app/order/$thesweetspotbykam" class="nav-cta">Order Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="inquiry-head">
+  <div class="container">
+    <div class="eyebrow">Event Inquiry</div>
+    <h1>Let's plan something <span class="italic">beautiful.</span></h1>
+    <p class="intro">I'd love to learn more about your celebration and what you're envisioning. Please complete the form below with as much detail as you can. Once I review your information, I'll follow up with availability, options, and pricing.</p>
+  </div>
+</header>
+
+<section class="forms-section">
+  <div class="container">
+    <div class="form-card">
+
+      <div class="form-alert error" id="form-alert" role="alert" aria-live="assertive" tabindex="-1"></div>
+
+      <form id="event-inquiry-form" novalidate>
+        <input type="hidden" name="_subject" value="New Event Inquiry — The Sweet Spot by Kam" />
+        <input type="hidden" name="_replyto" id="replyto" value="" />
+        <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <!-- ============ Your details ============ -->
+        <fieldset class="fieldset">
+          <legend>Your Details</legend>
+          <p class="legend-note">So I know who I'm speaking with and how to reach you.</p>
+
+          <div class="form-row">
+            <div class="form-group" data-field>
+              <label for="full-name">Full Name<span class="req">*</span></label>
+              <input type="text" id="full-name" name="Full Name" autocomplete="name" required />
+              <p class="field-error" id="err-full-name"></p>
+            </div>
+            <div class="form-group" data-field>
+              <label for="email">Email Address<span class="req">*</span></label>
+              <input type="email" id="email" name="Email Address" autocomplete="email" required />
+              <p class="field-error" id="err-email"></p>
+            </div>
+          </div>
+
+          <div class="form-group" data-field>
+            <label for="phone">Phone Number <span class="optional">(optional)</span></label>
+            <input type="tel" id="phone" name="Phone Number" autocomplete="tel" placeholder="612-470-2966" />
+            <p class="field-error" id="err-phone"></p>
+          </div>
+        </fieldset>
+
+        <!-- ============ About the event ============ -->
+        <fieldset class="fieldset">
+          <legend>About Your Event</legend>
+          <p class="legend-note">The basics of the celebration you're planning.</p>
+
+          <div class="form-row">
+            <div class="form-group" data-field>
+              <label for="event-type">Event Type<span class="req">*</span></label>
+              <select id="event-type" name="Event Type" required>
+                <option value="">Select an event type</option>
+                <option value="Wedding">Wedding</option>
+                <option value="Birthday">Birthday</option>
+                <option value="Baby Shower">Baby Shower</option>
+                <option value="Bridal Shower">Bridal Shower</option>
+                <option value="Graduation">Graduation</option>
+                <option value="Corporate Event">Corporate Event</option>
+                <option value="Church Event">Church Event</option>
+                <option value="Celebration of Life">Celebration of Life</option>
+                <option value="Other">Other</option>
+              </select>
+              <p class="field-error" id="err-event-type"></p>
+            </div>
+            <div class="form-group" data-field>
+              <label for="event-date">Event Date<span class="req">*</span></label>
+              <input type="date" id="event-date" name="Event Date" required />
+              <p class="field-error" id="err-event-date"></p>
+            </div>
+          </div>
+
+          <div class="form-group conditional" id="event-type-other-wrap" data-field>
+            <label for="event-type-other">Please describe your event type<span class="req">*</span></label>
+            <input type="text" id="event-type-other" name="Event Type (Other)" placeholder="Tell me a little about the occasion" />
+            <p class="field-error" id="err-event-type-other"></p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" data-field>
+              <label for="venue-name">Venue Name <span class="optional">(optional)</span></label>
+              <input type="text" id="venue-name" name="Venue Name" placeholder="Leave blank if not booked yet" />
+              <p class="field-error" id="err-venue-name"></p>
+            </div>
+            <div class="form-group" data-field>
+              <label for="venue-city">Venue City<span class="req">*</span></label>
+              <input type="text" id="venue-city" name="Venue City" autocomplete="address-level2" placeholder="Minneapolis, MN" required />
+              <p class="field-error" id="err-venue-city"></p>
+            </div>
+          </div>
+
+          <div class="form-group" data-field>
+            <label for="guest-count">Estimated Guest Count <span class="optional">(optional)</span></label>
+            <input type="number" id="guest-count" name="Estimated Guest Count" min="1" max="10000" step="1" inputmode="numeric" placeholder="e.g., 75" />
+            <p class="field-error" id="err-guest-count"></p>
+          </div>
+        </fieldset>
+
+        <!-- ============ What you're looking for ============ -->
+        <fieldset class="fieldset">
+          <legend>What You're Looking For</legend>
+          <p class="legend-note">Select everything you're considering — you can choose more than one.</p>
+
+          <div class="form-group" data-field id="products-wrap">
+            <span class="group-label" id="products-label">Product(s) Interested In<span class="req">*</span></span>
+            <div class="choice-grid" role="group" aria-labelledby="products-label">
+              <label class="choice"><input type="checkbox" name="Products Interested In" value="Cupcakes" /> Cupcakes</label>
+              <label class="choice"><input type="checkbox" name="Products Interested In" value="Cake" /> Cake</label>
+              <label class="choice"><input type="checkbox" name="Products Interested In" value="Cookies" /> Cookies</label>
+              <label class="choice"><input type="checkbox" name="Products Interested In" value="Brownies" /> Brownies</label>
+              <label class="choice"><input type="checkbox" name="Products Interested In" value="Dessert Assortment" /> Dessert Assortment</label>
+              <label class="choice"><input type="checkbox" name="Products Interested In" value="Bulla" /> Bulla</label>
+              <label class="choice"><input type="checkbox" name="Products Interested In" value="Sugar Bun" /> Sugar Bun</label>
+              <label class="choice"><input type="checkbox" name="Products Interested In" value="Other" id="product-other" /> Other</label>
+            </div>
+            <p class="field-error" id="err-products"></p>
+          </div>
+
+          <div class="form-group conditional" id="product-other-wrap" data-field>
+            <label for="product-other-detail">Tell me what you're looking for<span class="req">*</span></label>
+            <input type="text" id="product-other-detail" name="Product (Other)" placeholder="Describe the dessert or item you have in mind" />
+            <p class="field-error" id="err-product-other-detail"></p>
+          </div>
+
+          <div class="form-group" data-field>
+            <label for="quantity">Approximate Quantity Needed<span class="req">*</span></label>
+            <input type="text" id="quantity" name="Approximate Quantity Needed" placeholder="e.g., 100 cupcakes, or a 3-tier cake plus 4 dozen cookies" required />
+            <p class="field-error" id="err-quantity"></p>
+          </div>
+
+          <div class="form-group" data-field>
+            <label for="flavors">Flavor Interests <span class="optional">(optional)</span></label>
+            <textarea id="flavors" name="Flavor Interests" placeholder="Any flavors you're drawn to — and please note any allergies here."></textarea>
+            <p class="field-error" id="err-flavors"></p>
+          </div>
+        </fieldset>
+
+        <!-- ============ Look and feel ============ -->
+        <fieldset class="fieldset">
+          <legend>Look &amp; Feel</legend>
+          <p class="legend-note">Colors, styling, and anything that helps me picture your day.</p>
+
+          <div class="form-group" data-field>
+            <label for="colors">Event Colors or Theme <span class="optional">(optional)</span></label>
+            <input type="text" id="colors" name="Event Colors or Theme" placeholder="e.g., sage green &amp; ivory, garden party" />
+            <p class="field-error" id="err-colors"></p>
+          </div>
+
+          <div class="form-group" data-field>
+            <label for="design">Design or Style Description <span class="optional">(optional)</span></label>
+            <textarea id="design" name="Design or Style Description" placeholder="Elegant and minimal? Playful and bold? Florals, textures, finishes — describe what you're envisioning."></textarea>
+            <p class="field-error" id="err-design"></p>
+          </div>
+
+          <div class="form-group" data-field id="inspiration-wrap">
+            <span class="group-label" id="inspiration-label">Inspiration Image Upload <span class="optional">(optional)</span></span>
+            <div class="file-field">
+              <input type="file" id="inspiration" accept="image/png,image/jpeg,image/webp,image/heic,image/heif" />
+              <button type="button" class="file-trigger" id="file-trigger" aria-describedby="inspiration-label">Choose an Image</button>
+              <p class="file-name" id="file-name">No image selected</p>
+            </div>
+            <p class="hint" id="inspiration-hint"></p>
+            <p class="field-error" id="err-inspiration"></p>
+          </div>
+        </fieldset>
+
+        <!-- ============ Logistics ============ -->
+        <fieldset class="fieldset">
+          <legend>Logistics &amp; Budget</legend>
+          <p class="legend-note">Helpful for planning — an honest range is genuinely useful, never a dealbreaker.</p>
+
+          <div class="form-row">
+            <div class="form-group" data-field>
+              <label for="delivery">Delivery Needed <span class="optional">(optional)</span></label>
+              <select id="delivery" name="Delivery Needed">
+                <option value="">Select one</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not Sure Yet">Not Sure Yet</option>
+              </select>
+              <p class="field-error" id="err-delivery"></p>
+            </div>
+            <div class="form-group" data-field>
+              <label for="setup">Setup Needed <span class="optional">(optional)</span></label>
+              <select id="setup" name="Setup Needed">
+                <option value="">Select one</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not Sure Yet">Not Sure Yet</option>
+              </select>
+              <p class="field-error" id="err-setup"></p>
+            </div>
+          </div>
+
+          <div class="form-group" data-field>
+            <label for="budget">Estimated Budget <span class="optional">(optional)</span></label>
+            <input type="text" id="budget" name="Estimated Budget" placeholder="e.g., $300–$500" />
+            <p class="field-error" id="err-budget"></p>
+          </div>
+
+          <div class="form-group" data-field>
+            <label for="notes">Additional Notes <span class="optional">(optional)</span></label>
+            <textarea id="notes" name="Additional Notes" placeholder="Anything else I should know about your celebration."></textarea>
+            <p class="field-error" id="err-notes"></p>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="form-submit" id="submit-btn">Submit Inquiry</button>
+        <p class="form-note">Prefer to talk it through? Text <a href="tel:6124702966">612-470-2966</a> or email <a href="mailto:hello@thesweetspotbykam.com">hello@thesweetspotbykam.com</a>.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">The Sweet Spot by Kam</div>
+    <div class="footer-meta">Minneapolis, MN · Pickup Thu–Sun · Pre-Order Only</div>
+    <div class="footer-copy">© 2026 The Sweet Spot by Kam · All rights reserved</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* =====================================================================
+   * CONFIG
+   * ---------------------------------------------------------------------
+   * Formspree handles the submission itself: it stores every inquiry in
+   * the Formspree dashboard and emails hello@thesweetspotbykam.com.
+   *
+   * IMAGE STORAGE — currently OFF.
+   * Formspree only accepts file attachments on paid plans, so the
+   * inspiration image is not sent to Formspree. To start preserving the
+   * actual image files, create a public Supabase Storage bucket and fill
+   * in the three values below, then set `enabled: true`. Nothing else on
+   * this page needs to change. Until then the customer is asked to email
+   * the photo in, and the filename they picked rides along with the
+   * inquiry so it can be matched up.
+   * ===================================================================== */
+  var CONFIG = {
+    formspreeEndpoint: 'https://formspree.io/f/mzdlawgw',
+    thankYouPath: '/event-inquiry/thank-you',
+    contactEmail: 'hello@thesweetspotbykam.com',
+    storage: {
+      enabled: false,
+      supabaseUrl: '',          // e.g. https://xxxxxxxx.supabase.co
+      supabaseAnonKey: '',      // the project's public anon / publishable key
+      bucket: 'inspiration-images'
+    },
+    maxFileBytes: 5 * 1024 * 1024,
+    acceptedTypes: ['image/png', 'image/jpeg', 'image/webp', 'image/heic', 'image/heif']
+  };
+
+  var STORAGE_KEY = 'ssbk:event-inquiry';
+
+  var form = document.getElementById('event-inquiry-form');
+  var alertBox = document.getElementById('form-alert');
+  var submitBtn = document.getElementById('submit-btn');
+  var fileInput = document.getElementById('inspiration');
+  var fileTrigger = document.getElementById('file-trigger');
+  var fileNameEl = document.getElementById('file-name');
+  var eventTypeSelect = document.getElementById('event-type');
+  var eventTypeOtherWrap = document.getElementById('event-type-other-wrap');
+  var eventTypeOther = document.getElementById('event-type-other');
+  var productOther = document.getElementById('product-other');
+  var productOtherWrap = document.getElementById('product-other-wrap');
+  var productOtherDetail = document.getElementById('product-other-detail');
+  var productBoxes = Array.prototype.slice.call(
+    form.querySelectorAll('input[name="Products Interested In"]')
+  );
+  var emailInput = document.getElementById('email');
+  var dateInput = document.getElementById('event-date');
+
+  /* ---------------- helpers ---------------- */
+
+  function wrapperOf(el) {
+    return el.closest('[data-field]');
+  }
+
+  function showFieldError(el, message) {
+    var wrap = wrapperOf(el);
+    if (!wrap) return;
+    var err = wrap.querySelector('.field-error');
+    wrap.classList.add('has-error');
+    if (err) {
+      err.textContent = message;
+      err.classList.add('show');
+      if (el.setAttribute) {
+        el.setAttribute('aria-invalid', 'true');
+        el.setAttribute('aria-describedby', err.id);
+      }
+    }
+  }
+
+  function clearFieldError(el) {
+    var wrap = wrapperOf(el);
+    if (!wrap) return;
+    var err = wrap.querySelector('.field-error');
+    wrap.classList.remove('has-error');
+    if (err) {
+      err.textContent = '';
+      err.classList.remove('show');
+    }
+    if (el.removeAttribute) el.removeAttribute('aria-invalid');
+  }
+
+  function clearAllErrors() {
+    Array.prototype.forEach.call(form.querySelectorAll('.has-error'), function (w) {
+      w.classList.remove('has-error');
+    });
+    Array.prototype.forEach.call(form.querySelectorAll('.field-error'), function (e) {
+      e.textContent = '';
+      e.classList.remove('show');
+    });
+    Array.prototype.forEach.call(form.querySelectorAll('[aria-invalid]'), function (e) {
+      e.removeAttribute('aria-invalid');
+    });
+    hideAlert();
+  }
+
+  function showAlert(title, detail) {
+    alertBox.innerHTML = '';
+    var strong = document.createElement('strong');
+    strong.textContent = title;
+    alertBox.appendChild(strong);
+    if (detail) {
+      alertBox.appendChild(document.createTextNode(detail));
+    }
+    alertBox.classList.add('show');
+    alertBox.focus();
+  }
+
+  function hideAlert() {
+    alertBox.classList.remove('show');
+    alertBox.textContent = '';
+  }
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+  }
+
+  function todayISO() {
+    var now = new Date();
+    var local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    return local.toISOString().slice(0, 10);
+  }
+
+  /* ---------------- conditional fields ---------------- */
+
+  function syncEventTypeOther() {
+    var isOther = eventTypeSelect.value === 'Other';
+    eventTypeOtherWrap.classList.toggle('show', isOther);
+    if (isOther) {
+      eventTypeOther.setAttribute('required', 'required');
+    } else {
+      eventTypeOther.removeAttribute('required');
+      eventTypeOther.value = '';
+      clearFieldError(eventTypeOther);
+    }
+  }
+
+  function syncProductOther() {
+    var isOther = productOther.checked;
+    productOtherWrap.classList.toggle('show', isOther);
+    if (isOther) {
+      productOtherDetail.setAttribute('required', 'required');
+    } else {
+      productOtherDetail.removeAttribute('required');
+      productOtherDetail.value = '';
+      clearFieldError(productOtherDetail);
+    }
+  }
+
+  eventTypeSelect.addEventListener('change', function () {
+    clearFieldError(eventTypeSelect);
+    syncEventTypeOther();
+  });
+
+  productBoxes.forEach(function (box) {
+    box.addEventListener('change', function () {
+      box.closest('.choice').classList.toggle('checked', box.checked);
+      if (box === productOther) syncProductOther();
+      if (productBoxes.some(function (b) { return b.checked; })) {
+        clearFieldError(document.getElementById('products-wrap'));
+      }
+    });
+  });
+
+  /* ---------------- file field ---------------- */
+
+  var hintEl = document.getElementById('inspiration-hint');
+  hintEl.textContent = CONFIG.storage.enabled
+    ? 'JPG, PNG, WEBP or HEIC · up to 5MB.'
+    : 'JPG, PNG, WEBP or HEIC · up to 5MB. Photos can’t be attached here just yet — pick your image and I’ll note it on your inquiry, then email it to ' + CONFIG.contactEmail + ' and I’ll match it to your event.';
+
+  fileTrigger.addEventListener('click', function () { fileInput.click(); });
+
+  fileInput.addEventListener('change', function () {
+    clearFieldError(document.getElementById('inspiration-wrap'));
+    var file = fileInput.files && fileInput.files[0];
+    if (!file) {
+      fileNameEl.textContent = 'No image selected';
+      return;
+    }
+    if (!validateFile(file)) return;
+    renderFileName(file);
+  });
+
+  function renderFileName(file) {
+    fileNameEl.textContent = '';
+    fileNameEl.appendChild(document.createTextNode(file.name));
+    var clear = document.createElement('button');
+    clear.type = 'button';
+    clear.className = 'file-clear';
+    clear.textContent = 'Remove';
+    clear.addEventListener('click', function () {
+      fileInput.value = '';
+      fileNameEl.textContent = 'No image selected';
+      clearFieldError(document.getElementById('inspiration-wrap'));
+    });
+    fileNameEl.appendChild(clear);
+  }
+
+  function validateFile(file) {
+    var wrap = document.getElementById('inspiration-wrap');
+    var typeOk = CONFIG.acceptedTypes.indexOf(file.type) !== -1 ||
+      /\.(png|jpe?g|webp|heic|heif)$/i.test(file.name);
+    if (!typeOk) {
+      showFieldError(wrap, 'That file type isn’t supported. Please choose a JPG, PNG, WEBP or HEIC image.');
+      fileInput.value = '';
+      fileNameEl.textContent = 'No image selected';
+      return false;
+    }
+    if (file.size > CONFIG.maxFileBytes) {
+      showFieldError(wrap, 'That image is ' + (file.size / 1048576).toFixed(1) + 'MB. Please choose one under 5MB.');
+      fileInput.value = '';
+      fileNameEl.textContent = 'No image selected';
+      return false;
+    }
+    return true;
+  }
+
+  /* ---------------- validation ---------------- */
+
+  function validate() {
+    clearAllErrors();
+    var problems = [];
+
+    function fail(el, message) {
+      showFieldError(el, message);
+      problems.push(el);
+    }
+
+    var name = document.getElementById('full-name');
+    if (!name.value.trim()) fail(name, 'Please enter your full name.');
+
+    if (!emailInput.value.trim()) {
+      fail(emailInput, 'Please enter your email address so I can reply.');
+    } else if (!isValidEmail(emailInput.value.trim())) {
+      fail(emailInput, 'That doesn’t look like a valid email address.');
+    }
+
+    var phone = document.getElementById('phone');
+    if (phone.value.trim() && phone.value.replace(/\D/g, '').length < 7) {
+      fail(phone, 'Please enter a complete phone number, or leave this blank.');
+    }
+
+    if (!eventTypeSelect.value) fail(eventTypeSelect, 'Please choose the type of event.');
+    if (eventTypeSelect.value === 'Other' && !eventTypeOther.value.trim()) {
+      fail(eventTypeOther, 'Please tell me a little about the type of event.');
+    }
+
+    if (!dateInput.value) {
+      fail(dateInput, 'Please choose your event date.');
+    } else if (dateInput.value < todayISO()) {
+      fail(dateInput, 'Please choose a date in the future.');
+    }
+
+    var city = document.getElementById('venue-city');
+    if (!city.value.trim()) fail(city, 'Please enter the city your event is in.');
+
+    var guests = document.getElementById('guest-count');
+    if (guests.value.trim() && (Number(guests.value) < 1 || !isFinite(Number(guests.value)))) {
+      fail(guests, 'Please enter a guest count of 1 or more, or leave this blank.');
+    }
+
+    if (!productBoxes.some(function (b) { return b.checked; })) {
+      fail(document.getElementById('products-wrap'), 'Please select at least one product you’re interested in.');
+    }
+    if (productOther.checked && !productOtherDetail.value.trim()) {
+      fail(productOtherDetail, 'Please describe what you’re looking for.');
+    }
+
+    var qty = document.getElementById('quantity');
+    if (!qty.value.trim()) fail(qty, 'Please give me a rough quantity, even an estimate.');
+
+    var file = fileInput.files && fileInput.files[0];
+    if (file && !validateFile(file)) {
+      problems.push(document.getElementById('inspiration-wrap'));
+    }
+
+    if (problems.length) {
+      showAlert(
+        'Please check the highlighted field' + (problems.length > 1 ? 's' : '') + '.',
+        'A few details are missing or need a small fix before I can receive your inquiry.'
+      );
+      var firstWrap = wrapperOf(problems[0]) || problems[0];
+      firstWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var focusable = problems[0].querySelector
+        ? (problems[0].querySelector('input, select, textarea') || problems[0])
+        : problems[0];
+      if (focusable && focusable.focus) {
+        try { focusable.focus({ preventScroll: true }); } catch (e) { focusable.focus(); }
+      }
+      return false;
+    }
+    return true;
+  }
+
+  /* ---------------- image upload (Supabase Storage) ---------------- */
+
+  function uploadInspiration(file) {
+    var s = CONFIG.storage;
+    if (!s.enabled || !s.supabaseUrl || !s.supabaseAnonKey) {
+      return Promise.resolve(null);
+    }
+    var safeName = file.name.replace(/[^\w.\-]+/g, '-').slice(-80);
+    var path = new Date().getFullYear() + '/' +
+      Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '-' + safeName;
+    var base = s.supabaseUrl.replace(/\/+$/, '');
+
+    return fetch(base + '/storage/v1/object/' + encodeURIComponent(s.bucket) + '/' + path, {
+      method: 'POST',
+      headers: {
+        apikey: s.supabaseAnonKey,
+        Authorization: 'Bearer ' + s.supabaseAnonKey,
+        'Content-Type': file.type || 'application/octet-stream',
+        'x-upsert': 'false'
+      },
+      body: file
+    }).then(function (res) {
+      if (!res.ok) throw new Error('Upload failed with status ' + res.status);
+      return base + '/storage/v1/object/public/' + encodeURIComponent(s.bucket) + '/' + path;
+    });
+  }
+
+  /* ---------------- submit ---------------- */
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (!validate()) return;
+
+    var file = fileInput.files && fileInput.files[0];
+    submitBtn.disabled = true;
+    submitBtn.textContent = file && CONFIG.storage.enabled ? 'Uploading…' : 'Sending…';
+
+    uploadInspiration(file)
+      .catch(function () { return null; })  // never lose the inquiry over a failed image
+      .then(function (imageUrl) {
+        submitBtn.textContent = 'Sending…';
+
+        emailInput.value = emailInput.value.trim();
+        document.getElementById('replyto').value = emailInput.value;
+
+        var data = new FormData(form);
+        if (imageUrl) {
+          data.append('Inspiration Image', imageUrl);
+        } else if (file) {
+          data.append('Inspiration Image', 'Customer selected "' + file.name +
+            '" — ask them to email it to ' + CONFIG.contactEmail + '.');
+        }
+        data.append('Submitted From', window.location.href);
+
+        return fetch(CONFIG.formspreeEndpoint, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' }
+        }).then(function (res) {
+          if (res.ok) return { imageUrl: imageUrl };
+          return res.json().catch(function () { return null; }).then(function (body) {
+            var detail = body && body.errors && body.errors.length
+              ? body.errors.map(function (e) { return e.message; }).join(' ')
+              : 'The form service returned an error (' + res.status + ').';
+            throw new Error(detail);
+          });
+        });
+      })
+      .then(function (result) {
+        var record = {
+          submittedAt: new Date().toISOString(),
+          name: document.getElementById('full-name').value.trim(),
+          eventType: eventTypeSelect.value === 'Other'
+            ? eventTypeOther.value.trim()
+            : eventTypeSelect.value,
+          eventDate: dateInput.value,
+          imageStored: !!(result && result.imageUrl),
+          imagePending: !!(file && !(result && result.imageUrl))
+        };
+        try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(record)); } catch (e) {}
+        window.location.assign(CONFIG.thankYouPath);
+      })
+      .catch(function (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Inquiry';
+        showAlert(
+          'Your inquiry didn’t go through.',
+          (err && err.message ? err.message + ' ' : '') +
+          'Please try again in a moment — or send your details straight to ' +
+          CONFIG.contactEmail + ' and I’ll take it from there.'
+        );
+      });
+  });
+
+  /* ---------------- init ---------------- */
+
+  dateInput.min = todayISO();
+  syncEventTypeOther();
+  syncProductOther();
+
+  // Clear a field's error as soon as the customer starts fixing it.
+  Array.prototype.forEach.call(form.querySelectorAll('input, select, textarea'), function (el) {
+    var evt = (el.tagName === 'SELECT' || el.type === 'checkbox' || el.type === 'date')
+      ? 'change' : 'input';
+    el.addEventListener(evt, function () { clearFieldError(el); });
+  });
+})();
+</script>
+
+</body>
+</html>
