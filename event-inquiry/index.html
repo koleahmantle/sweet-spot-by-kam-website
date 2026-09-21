@@ -266,6 +266,9 @@
 
   .conditional[hidden] { display: none; }
 
+  [data-invalid] { border-color: #b4541f !important; }
+  [data-invalid].checkbox-grid { border: 1px solid #b4541f; border-radius: 6px; padding: 8px; }
+
   footer {
     background: var(--teal-darkest);
     color: var(--cream);
@@ -334,7 +337,10 @@
     <div class="form-card">
       <div class="alert" id="form-alert" role="alert" hidden></div>
 
-      <form id="event-inquiry-form" method="POST" enctype="multipart/form-data" action="">
+      <!-- novalidate: the browser blocks its own submit event before any handler
+     runs, so its bubbles are the only feedback and a hidden or offscreen
+     control fails silently. Validation is done in script instead. -->
+      <form id="event-inquiry-form" method="POST" enctype="multipart/form-data" action="" novalidate>
         <!-- Anti-spam: hidden from people, tempting to bots. -->
         <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
         <input type="hidden" name="rendered_at" id="rendered_at" value="" />
@@ -564,23 +570,98 @@
   function showAlert(message) {
     alertBox.textContent = message;
     alertBox.hidden = false;
-    alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // The nav is sticky, so scrolling the banner to the very top would
+    // tuck it underneath. Offset by the nav's real height.
+    var nav = document.querySelector('nav');
+    var offset = (nav ? nav.getBoundingClientRect().height : 0) + 16;
+    var y = alertBox.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
   }
 
+  function clearAlert() {
+    alertBox.hidden = true;
+    [].forEach.call(form.querySelectorAll('[data-invalid]'), function (el) {
+      el.removeAttribute('data-invalid');
+    });
+  }
+
+  function labelFor(field) {
+    var byFor = document.querySelector('label[for="' + field.id + '"]');
+    if (byFor) return byFor.textContent.replace(/\s*\(optional\)\s*/i, '').replace(/\*/g, '').trim();
+    var group = field.closest('.form-group');
+    var spanLabel = group && group.querySelector('.choice-label');
+    return spanLabel ? spanLabel.textContent.replace(/\*/g, '').trim() : 'a required field';
+  }
+
+  function markInvalid(field) {
+    field.setAttribute('data-invalid', 'true');
+  }
+
+  function resetButton() {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Submit Inquiry';
+  }
+
+  var submitButton = document.getElementById('submit-button');
+
+  // Returning via the back button can restore the button in its disabled
+  // "Sending…" state, which looks like a dead form.
+  window.addEventListener('pageshow', resetButton);
+
   form.addEventListener('submit', function (event) {
-    if (!productBoxes.some(function (box) { return box.checked; })) {
+    clearAlert();
+
+    // 1. Native required/type validation, reported ourselves so the message
+    //    names the field instead of relying on a bubble that can appear
+    //    offscreen or not at all for a hidden control.
+    var invalid = [].filter.call(
+      form.querySelectorAll('input, select, textarea'),
+      function (el) { return el.id !== 'company' && !el.checkValidity(); }
+    );
+
+    if (invalid.length) {
       event.preventDefault();
-      showAlert('Please choose at least one product you are interested in.');
+      invalid.forEach(markInvalid);
+      var names = invalid.map(labelFor);
+      showAlert(
+        names.length === 1
+          ? 'Please complete: ' + names[0] + '.'
+          : 'Please complete these fields: ' + names.join(', ') + '.'
+      );
+      resetButton();
+      try { invalid[0].focus({ preventScroll: true }); } catch (e) {}
       return;
     }
+
+    // 2. A checkbox group cannot express "at least one" on its own.
+    if (!productBoxes.some(function (box) { return box.checked; })) {
+      event.preventDefault();
+      markInvalid(document.getElementById('products-group'));
+      showAlert('Please choose at least one product you are interested in.');
+      resetButton();
+      return;
+    }
+
+    // 3. Size check, with the actual size so the message is actionable.
     var file = document.getElementById('inspiration_image').files[0];
     if (file && file.size > 8 * 1024 * 1024) {
       event.preventDefault();
-      showAlert('That inspiration image is larger than 8 MB. Please choose a smaller file.');
+      markInvalid(document.getElementById('inspiration_image'));
+      showAlert(
+        'Your inspiration image is ' + (file.size / 1048576).toFixed(1) +
+        ' MB, over the 8 MB limit. Please choose a smaller image, or remove it ' +
+        'and send it by email instead — the rest of your inquiry will still reach us.'
+      );
+      resetButton();
       return;
     }
-    document.getElementById('submit-button').disabled = true;
-    document.getElementById('submit-button').textContent = 'Sending…';
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending\u2026';
+
+    // If the POST somehow never navigates, don't strand the visitor on a
+    // permanently disabled button.
+    window.setTimeout(resetButton, 20000);
   });
 
   // Surface any error the API bounced us back with.
