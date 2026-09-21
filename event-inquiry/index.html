@@ -530,6 +530,17 @@
   // Time trap value: bots that post instantly are filtered server-side.
   document.getElementById('rendered_at').value = String(Date.now());
 
+  // An event date in the past can't be catered, so the picker won't offer
+  // one. Computed from local date parts, not toISOString, which would shift
+  // the day for anyone west of UTC.
+  var eventDateInput = document.getElementById('event_date');
+  var now = new Date();
+  var todayISO =
+    now.getFullYear() + '-' +
+    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getDate()).padStart(2, '0');
+  eventDateInput.min = todayISO;
+
   // Conditional "Other" fields.
   function bindConditional(trigger, wrap, input, isOn) {
     function sync() {
@@ -611,25 +622,68 @@
   form.addEventListener('submit', function (event) {
     clearAlert();
 
-    // 1. Native required/type validation, reported ourselves so the message
-    //    names the field instead of relying on a bubble that can appear
-    //    offscreen or not at all for a hidden control.
-    var invalid = [].filter.call(
-      form.querySelectorAll('input, select, textarea'),
-      function (el) { return el.id !== 'company' && !el.checkValidity(); }
-    );
+    // 1. Split "you left this out" from "this doesn't look right" -- the
+    //    browser's validity flags cover both, but they need different wording.
+    var empty = [];
+    var malformed = [];
+    [].forEach.call(form.querySelectorAll('input, select, textarea'), function (el) {
+      if (el.id === 'company' || el.checkValidity()) return;
+      (String(el.value || '').trim() ? malformed : empty).push(el);
+    });
 
-    if (invalid.length) {
+    if (empty.length) {
       event.preventDefault();
-      invalid.forEach(markInvalid);
-      var names = invalid.map(labelFor);
+      empty.forEach(markInvalid);
+      var names = empty.map(labelFor);
       showAlert(
         names.length === 1
           ? 'Please complete: ' + names[0] + '.'
           : 'Please complete these fields: ' + names.join(', ') + '.'
       );
       resetButton();
-      try { invalid[0].focus({ preventScroll: true }); } catch (e) {}
+      try { empty[0].focus({ preventScroll: true }); } catch (e) {}
+      return;
+    }
+
+    // 1b. Format checks, mirroring what the endpoint enforces, so a typo is
+    //     caught before a round trip.
+    var problems = [];
+    var flagged = [];
+
+    var emailField = document.getElementById('email');
+    if (!/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(emailField.value.trim())) {
+      markInvalid(emailField);
+      flagged.push(emailField);
+      problems.push('a valid email address, like name@example.com');
+    }
+
+    // Phone is optional, so only check it when something was typed.
+    var phoneField = document.getElementById('phone');
+    var phoneDigits = phoneField.value.replace(/\D/g, '');
+    if (phoneField.value.trim() && (phoneDigits.length < 10 || phoneDigits.length > 15)) {
+      markInvalid(phoneField);
+      flagged.push(phoneField);
+      problems.push('a phone number with at least 10 digits, like 612-470-2966');
+    }
+
+    if (eventDateInput.value && eventDateInput.value < todayISO) {
+      markInvalid(eventDateInput);
+      flagged.push(eventDateInput);
+      problems.push('an event date that is today or later');
+    }
+
+    // Anything the browser still rejects that the checks above didn't name.
+    malformed.forEach(function (el) {
+      if (flagged.indexOf(el) !== -1) return;
+      markInvalid(el);
+      problems.push('a valid ' + labelFor(el).toLowerCase());
+    });
+
+    if (problems.length) {
+      event.preventDefault();
+      showAlert('Please enter ' + problems.join(', and ') + '.');
+      resetButton();
+      try { (flagged[0] || malformed[0]).focus({ preventScroll: true }); } catch (e) {}
       return;
     }
 
@@ -670,7 +724,8 @@
   if (error) {
     var messages = {
       missing: 'Some required details were missing. Please check the highlighted fields and try again.',
-      invalid: 'We could not read that submission. Please try again.',
+      invalid_field: 'Please check the highlighted fields — the email, phone number, or event date needs another look.',
+      unreadable: 'We could not read that submission. Please try again.',
       rate_limit: 'That is a few submissions in a short time. Please wait a little while and try again.',
       server: 'Something went wrong saving your inquiry. Please try again, or email hello@thesweetspotbykam.com.'
     };
