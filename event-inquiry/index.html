@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Event Inquiry — The Sweet Spot by Kam</title>
+<meta name="description" content="Tell us about your wedding, shower, or celebration and we'll follow up with availability, options, and pricing." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6ef;
+    --cream-deep: #f3ebda;
+    --cream-warm: #f6efe0;
+    --ink: #1f2a26;
+    --ink-soft: #5c615c;
+    --teal: #5a9b8e;
+    --teal-deep: #3f7a6e;
+    --teal-darkest: #1f3e3c;
+    --teal-bg: #e6efeb;
+    --gold: #d4a445;
+    --gold-soft: #e0b35a;
+    --line: #e5dcc8;
+    --shadow: 0 1px 3px rgba(31,42,38,0.04), 0 8px 24px rgba(31,42,38,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250,246,239,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-logo .by-kam { font-style: italic; font-weight: 400; color: var(--teal-deep); }
+  .nav-links { list-style: none; display: flex; align-items: center; gap: 28px; }
+  .nav-links a {
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal-deep); }
+  .nav-cta {
+    background: var(--teal);
+    color: var(--cream) !important;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .nav-cta:hover { background: var(--teal-deep); }
+  @media (max-width: 860px) { .nav-links li:not(:last-child) { display: none; } }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 72px 0; }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .eyebrow::before { content: "\2726"; color: var(--gold); font-size: 10px; }
+
+  .page-head { text-align: center; max-width: 720px; margin: 0 auto 44px; }
+  .page-head h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 46px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  .page-head h1 .italic { font-style: italic; color: var(--teal-deep); }
+  .page-head p.intro {
+    color: var(--ink-soft);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  @media (max-width: 600px) { .page-head h1 { font-size: 34px; } }
+
+  .form-card {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 44px;
+    box-shadow: var(--shadow);
+  }
+  .fieldset { border: 0; margin-bottom: 36px; }
+  .fieldset:last-of-type { margin-bottom: 20px; }
+  .fieldset legend {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 4px;
+    padding: 0;
+  }
+  .fieldset .hint {
+    color: var(--ink-soft);
+    font-size: 13px;
+    margin-bottom: 22px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label,
+  .form-row label,
+  .choice-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .optional {
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--ink-soft);
+  }
+  .req { color: var(--gold); margin-left: 2px; }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea,
+  .form-row input,
+  .form-row select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    background: var(--cream);
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus,
+  .form-row input:focus,
+  .form-row select:focus {
+    outline: none;
+    border-color: var(--teal);
+  }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .field-note { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
+
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 14px;
+  }
+  .check:hover { border-color: var(--teal); }
+  .check input { width: 16px; height: 16px; accent-color: var(--teal-deep); cursor: pointer; flex: none; }
+  .check:has(input:checked) { border-color: var(--teal); background: var(--teal-bg); }
+
+  .radio-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .radio-row .check { flex: 1; min-width: 104px; }
+
+  .file-field {
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    padding: 18px;
+    background: var(--cream-warm);
+  }
+  .file-field input { border: 0; padding: 0; background: transparent; font-size: 13px; }
+
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+    padding: 16px;
+    background: var(--teal);
+    color: var(--cream);
+    border: none;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .form-submit:hover { background: var(--teal-deep); }
+  .form-submit:disabled { opacity: 0.6; cursor: progress; }
+  .form-note { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 14px; }
+  .form-note a { color: var(--teal); }
+
+  .alert {
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    border: 1px solid var(--gold);
+    background: #fbf2d9;
+    color: #6f5214;
+  }
+  .alert[hidden] { display: none; }
+
+  .conditional[hidden] { display: none; }
+
+  footer {
+    background: var(--teal-darkest);
+    color: var(--cream);
+    padding: 48px 0;
+    text-align: center;
+  }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 8px; }
+  .footer-meta { font-size: 13px; opacity: 0.8; }
+  .footer-copy { font-size: 12px; opacity: 0.6; margin-top: 16px; }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+    .form-card { padding: 28px 22px; }
+    .form-row, .checkbox-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">The Sweet Spot <span class="by-kam">by Kam</span></a>
+    <ul class="nav-links">
+      <li><a href="/#menu">Menu</a></li>
+      <li><a href="/#how">How It Works</a></li>
+      <li><a href="/#about">Our Story</a></li>
+      <li><a href="/#forms">Contact</a></li>
+      <li><a href="https://cash.app/order/$thesweetspotbykam" class="nav-cta">Order Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section>
+  <div class="container">
+    <div class="page-head">
+      <div class="eyebrow">Event Inquiry</div>
+      <h1>Let's plan something <span class="italic">beautiful.</span></h1>
+      <p class="intro">I&rsquo;d love to learn more about your celebration and what you&rsquo;re envisioning. Please complete the form below with as much detail as you can. Once I review your information, I&rsquo;ll follow up with availability, options, and pricing.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="alert" id="form-alert" role="alert" hidden></div>
+
+      <form id="event-inquiry-form" method="POST" enctype="multipart/form-data" action="">
+        <!-- Anti-spam: hidden from people, tempting to bots. -->
+        <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
+        <input type="hidden" name="rendered_at" id="rendered_at" value="" />
+
+        <fieldset class="fieldset">
+          <legend>Your details</legend>
+          <p class="hint">So I know who I&rsquo;m talking to.</p>
+
+          <div class="form-row">
+            <div>
+              <label for="full_name">Full Name<span class="req">*</span></label>
+              <input type="text" id="full_name" name="full_name" autocomplete="name" required />
+            </div>
+            <div>
+              <label for="email">Email Address<span class="req">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number <span class="optional">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" />
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>About your event</legend>
+          <p class="hint">Weddings, showers, corporate gatherings &mdash; anything larger or custom.</p>
+
+          <div class="form-row">
+            <div>
+              <label for="event_type">Event Type<span class="req">*</span></label>
+              <select id="event_type" name="event_type" required>
+                <option value="">Select an event type</option>
+                <option>Wedding</option>
+                <option>Birthday</option>
+                <option>Baby Shower</option>
+                <option>Bridal Shower</option>
+                <option>Graduation</option>
+                <option>Corporate Event</option>
+                <option>Church Event</option>
+                <option>Celebration of Life</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="event_date">Event Date<span class="req">*</span></label>
+              <input type="date" id="event_date" name="event_date" required />
+            </div>
+          </div>
+
+          <div class="form-group conditional" id="event_type_other_wrap" hidden>
+            <label for="event_type_other">Tell me about your event<span class="req">*</span></label>
+            <input type="text" id="event_type_other" name="event_type_other" placeholder="What kind of celebration is it?" />
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="venue_name">Venue Name <span class="optional">(optional)</span></label>
+              <input type="text" id="venue_name" name="venue_name" />
+            </div>
+            <div>
+              <label for="venue_city">Venue City<span class="req">*</span></label>
+              <input type="text" id="venue_city" name="venue_city" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="guest_count">Estimated Guest Count <span class="optional">(optional)</span></label>
+            <input type="text" id="guest_count" name="guest_count" placeholder="e.g., 120, or 150&ndash;200" />
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>What you&rsquo;re looking for</legend>
+          <p class="hint">Choose everything you&rsquo;re considering &mdash; nothing is locked in.</p>
+
+          <div class="form-group">
+            <span class="choice-label">Product(s) Interested In<span class="req">*</span></span>
+            <div class="checkbox-grid" id="products-group">
+              <label class="check"><input type="checkbox" name="products" value="Cupcakes" /> Cupcakes</label>
+              <label class="check"><input type="checkbox" name="products" value="Cookies" /> Cookies</label>
+              <label class="check"><input type="checkbox" name="products" value="Brownies" /> Brownies</label>
+              <label class="check"><input type="checkbox" name="products" value="Dessert Assortment" /> Dessert Assortment</label>
+              <label class="check"><input type="checkbox" name="products" value="Bulla" /> Bulla</label>
+              <label class="check"><input type="checkbox" name="products" value="Other" id="products_other_toggle" /> Other</label>
+            </div>
+          </div>
+
+          <div class="form-group conditional" id="products_other_wrap" hidden>
+            <label for="products_other">What else are you hoping for?<span class="req">*</span></label>
+            <input type="text" id="products_other" name="products_other" placeholder="Describe what you have in mind" />
+          </div>
+
+          <div class="form-group">
+            <label for="quantity">Approximate Quantity Needed<span class="req">*</span></label>
+            <input type="text" id="quantity" name="quantity" placeholder="e.g., 5 dozen cupcakes, or 100 cookies" required />
+            <p class="field-note">An estimate is fine &mdash; we can refine it together.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="flavor_interests">Flavor Interests <span class="optional">(optional)</span></label>
+            <textarea id="flavor_interests" name="flavor_interests" placeholder="Favorites, must-haves, or anything to avoid (allergies, dietary needs)"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>Look &amp; feel</legend>
+          <p class="hint">Share as much or as little as you like.</p>
+
+          <div class="form-group">
+            <label for="colors_theme">Event Colors or Theme <span class="optional">(optional)</span></label>
+            <input type="text" id="colors_theme" name="colors_theme" placeholder="e.g., sage green and ivory, garden party" />
+          </div>
+
+          <div class="form-group">
+            <label for="design_description">Colors, Theme &amp; Presentation Ideas <span class="optional">(optional)</span></label>
+            <textarea id="design_description" name="design_description" placeholder="How would you like it to look and be presented? Tiered display, dessert table, individual boxes, florals..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="inspiration_image">Inspiration Image Upload <span class="optional">(optional)</span></label>
+            <div class="file-field">
+              <input type="file" id="inspiration_image" name="inspiration_image" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" />
+              <p class="field-note">One image, up to 8&nbsp;MB. JPG, PNG, WebP, or HEIC.</p>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>Logistics</legend>
+          <p class="hint">Not sure yet is a perfectly good answer.</p>
+
+          <div class="form-group">
+            <span class="choice-label">Delivery Needed</span>
+            <div class="radio-row">
+              <label class="check"><input type="radio" name="delivery_needed" value="yes" /> Yes</label>
+              <label class="check"><input type="radio" name="delivery_needed" value="no" /> No</label>
+              <label class="check"><input type="radio" name="delivery_needed" value="unsure" /> Not Sure Yet</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <span class="choice-label">Setup Needed</span>
+            <div class="radio-row">
+              <label class="check"><input type="radio" name="setup_needed" value="yes" /> Yes</label>
+              <label class="check"><input type="radio" name="setup_needed" value="no" /> No</label>
+              <label class="check"><input type="radio" name="setup_needed" value="unsure" /> Not Sure Yet</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="budget">Estimated Budget <span class="optional">(optional)</span></label>
+            <input type="text" id="budget" name="budget" placeholder="e.g., $400&ndash;600" />
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Additional Notes <span class="optional">(optional)</span></label>
+            <textarea id="notes" name="notes" placeholder="Anything else I should know?"></textarea>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="form-submit" id="submit-button">Submit Inquiry</button>
+        <p class="form-note">Prefer to talk it through? Text <a href="tel:6124702966">612-470-2966</a> or email <a href="mailto:hello@thesweetspotbykam.com">hello@thesweetspotbykam.com</a>.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">The Sweet Spot by Kam</div>
+  <div class="footer-meta">Minneapolis, MN &middot; Pickup Thu&ndash;Sun &middot; Pre-Order Only</div>
+  <div class="footer-copy">&copy; 2026 The Sweet Spot by Kam &middot; All rights reserved</div>
+</footer>
+
+<script>
+(function () {
+  // The dashboard hosts the API. Point at a local dashboard when testing
+  // from localhost, otherwise the deployed one.
+  var LOCAL_API = 'http://localhost:3000';
+  var PROD_API = 'https://the-sweet-spot-dashboard.vercel.app';
+  var host = window.location.hostname;
+  var isLocal = host === 'localhost' || host === '127.0.0.1';
+  var form = document.getElementById('event-inquiry-form');
+  form.action = (isLocal ? LOCAL_API : PROD_API) + '/api/public/event-inquiry';
+
+  // Time trap value: bots that post instantly are filtered server-side.
+  document.getElementById('rendered_at').value = String(Date.now());
+
+  // Conditional "Other" fields.
+  function bindConditional(trigger, wrap, input, isOn) {
+    function sync() {
+      var on = isOn();
+      wrap.hidden = !on;
+      // Only required while visible, or the browser blocks submit on a
+      // hidden field.
+      input.required = on;
+      if (!on) input.value = '';
+    }
+    trigger.addEventListener('change', sync);
+    sync();
+  }
+
+  var eventType = document.getElementById('event_type');
+  bindConditional(
+    eventType,
+    document.getElementById('event_type_other_wrap'),
+    document.getElementById('event_type_other'),
+    function () { return eventType.value === 'Other'; }
+  );
+
+  var productsOtherToggle = document.getElementById('products_other_toggle');
+  bindConditional(
+    document.getElementById('products-group'),
+    document.getElementById('products_other_wrap'),
+    document.getElementById('products_other'),
+    function () { return productsOtherToggle.checked; }
+  );
+
+  // At least one product must be picked; the browser can't express that
+  // for a checkbox group on its own.
+  var productBoxes = Array.prototype.slice.call(
+    document.querySelectorAll('input[name="products"]')
+  );
+  var alertBox = document.getElementById('form-alert');
+
+  function showAlert(message) {
+    alertBox.textContent = message;
+    alertBox.hidden = false;
+    alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  form.addEventListener('submit', function (event) {
+    if (!productBoxes.some(function (box) { return box.checked; })) {
+      event.preventDefault();
+      showAlert('Please choose at least one product you are interested in.');
+      return;
+    }
+    var file = document.getElementById('inspiration_image').files[0];
+    if (file && file.size > 8 * 1024 * 1024) {
+      event.preventDefault();
+      showAlert('That inspiration image is larger than 8 MB. Please choose a smaller file.');
+      return;
+    }
+    document.getElementById('submit-button').disabled = true;
+    document.getElementById('submit-button').textContent = 'Sending…';
+  });
+
+  // Surface any error the API bounced us back with.
+  var params = new URLSearchParams(window.location.search);
+  var error = params.get('error');
+  if (error) {
+    var messages = {
+      missing: 'Some required details were missing. Please check the highlighted fields and try again.',
+      invalid: 'We could not read that submission. Please try again.',
+      rate_limit: 'That is a few submissions in a short time. Please wait a little while and try again.',
+      server: 'Something went wrong saving your inquiry. Please try again, or email hello@thesweetspotbykam.com.'
+    };
+    showAlert(messages[error] || messages.server);
+
+    var fields = (params.get('fields') || '').split(',').filter(Boolean);
+    fields.forEach(function (name) {
+      var el = document.getElementById(name);
+      if (el) el.style.borderColor = '#b4541f';
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
