@@ -71,6 +71,7 @@
   }
   .nav-links a:hover { color: var(--teal-deep); }
   .nav-cta {
+    white-space: nowrap;
     background: var(--teal);
     color: var(--cream) !important;
     padding: 10px 20px;
@@ -78,7 +79,17 @@
     font-weight: 500;
   }
   .nav-cta:hover { background: var(--teal-deep); }
-  @media (max-width: 860px) { .nav-links li:not(:last-child) { display: none; } }
+
+  /* Matches the homepage, which drops its nav links at this width. */
+  @media (max-width: 720px) {
+    /* Room is tight, so the section links give way to the one action that
+       matters here. The logo still returns to the homepage. */
+    .nav-links { gap: 16px; }
+    .nav-links li:not(:last-child) { display: none; }
+    .nav-inner { padding: 14px 20px; gap: 12px; }
+    .nav-logo { font-size: 17px; }
+    .nav-cta { padding: 9px 16px; font-size: 13px; }
+  }
 
   .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
   section { padding: 72px 0; }
@@ -267,8 +278,33 @@
 
   @media (max-width: 600px) {
     .container { padding: 0 20px; }
-    .form-card { padding: 28px 22px; }
-    .form-row, .checkbox-grid { grid-template-columns: 1fr; }
+    section { padding: 44px 0; }
+    .page-head { margin-bottom: 32px; }
+    .form-card { padding: 26px 20px; }
+    .fieldset { margin-bottom: 28px; }
+
+    /* Paired inputs stack; the product checkboxes stay two-up so the page
+       doesn't turn into one very long column. */
+    .form-row { grid-template-columns: 1fr; }
+    .checkbox-grid { gap: 8px; }
+    .check { padding: 11px 12px; font-size: 13px; }
+
+    /* Three even columns instead of 2 + 1, which left "Not Sure Yet"
+       stranded on its own full-width row. */
+    .radio-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .radio-row .check { min-width: 0; padding: 11px 8px; font-size: 12px; }
+  }
+
+  /* "Not Sure Yet" needs more room than a product name, so the radios fall
+     back to a stacked list earlier than the checkboxes do. */
+  @media (max-width: 400px) {
+    .radio-row { grid-template-columns: 1fr; }
+    .radio-row .check { font-size: 13px; padding: 11px 12px; }
+  }
+
+  /* Narrowest phones: one product per row. */
+  @media (max-width: 340px) {
+    .checkbox-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
