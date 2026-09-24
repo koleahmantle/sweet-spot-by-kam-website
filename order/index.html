@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order — The Sweet Spot by Kam</title>
+<meta name="description" content="Pre-order cookies, cupcakes, brownies and bulla for pickup. Baked fresh to order." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6ef;
+    --cream-deep: #f3ebda;
+    --cream-warm: #f6efe0;
+    --ink: #1f2a26;
+    --ink-soft: #5c615c;
+    --teal: #5a9b8e;
+    --teal-deep: #3f7a6e;
+    --teal-darkest: #1f3e3c;
+    --teal-bg: #e6efeb;
+    --gold: #d4a445;
+    --gold-soft: #e0b35a;
+    --line: #e5dcc8;
+    --shadow: 0 1px 3px rgba(31,42,38,0.04), 0 8px 24px rgba(31,42,38,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250,246,239,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-logo .by-kam { font-style: italic; font-weight: 400; color: var(--teal-deep); }
+  .nav-links { list-style: none; display: flex; align-items: center; gap: 28px; }
+  .nav-links a {
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal-deep); }
+  .nav-cta {
+    white-space: nowrap;
+    background: var(--teal);
+    color: var(--cream) !important;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .nav-cta:hover { background: var(--teal-deep); }
+
+  /* Matches the homepage, which drops its nav links at this width. */
+  @media (max-width: 720px) {
+    /* Room is tight, so the section links give way to the one action that
+       matters here. The logo still returns to the homepage. */
+    .nav-links { gap: 16px; }
+    .nav-links li:not(:last-child) { display: none; }
+    .nav-inner { padding: 14px 20px; gap: 12px; }
+    .nav-logo { font-size: 17px; }
+    .nav-cta { padding: 9px 16px; font-size: 13px; }
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 72px 0; }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .eyebrow::before { content: "\2726"; color: var(--gold); font-size: 10px; }
+
+  .page-head { text-align: center; max-width: 720px; margin: 0 auto 44px; }
+  .page-head h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 46px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  .page-head h1 .italic { font-style: italic; color: var(--teal-deep); }
+  .page-head p.intro {
+    color: var(--ink-soft);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  @media (max-width: 600px) { .page-head h1 { font-size: 34px; } }
+
+  .form-card {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 44px;
+    box-shadow: var(--shadow);
+  }
+  .fieldset { border: 0; margin-bottom: 36px; }
+  .fieldset:last-of-type { margin-bottom: 20px; }
+  .fieldset legend {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 4px;
+    padding: 0;
+  }
+  .fieldset .hint {
+    color: var(--ink-soft);
+    font-size: 13px;
+    margin-bottom: 22px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label,
+  .form-row label,
+  .choice-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .optional {
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--ink-soft);
+  }
+  .req { color: var(--gold); margin-left: 2px; }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea,
+  .form-row input,
+  .form-row select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    background: var(--cream);
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus,
+  .form-row input:focus,
+  .form-row select:focus {
+    outline: none;
+    border-color: var(--teal);
+  }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .field-note { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
+
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 14px;
+  }
+  .check:hover { border-color: var(--teal); }
+  .check input { width: 16px; height: 16px; accent-color: var(--teal-deep); cursor: pointer; flex: none; }
+  .check:has(input:checked) { border-color: var(--teal); background: var(--teal-bg); }
+
+  .radio-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .radio-row .check { flex: 1; min-width: 104px; }
+
+  .file-field {
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    padding: 18px;
+    background: var(--cream-warm);
+  }
+  .file-field input { border: 0; padding: 0; background: transparent; font-size: 13px; }
+
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+    padding: 16px;
+    background: var(--teal);
+    color: var(--cream);
+    border: none;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .form-submit:hover { background: var(--teal-deep); }
+  .form-submit:disabled { opacity: 0.6; cursor: progress; }
+  .form-note { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 14px; }
+  .form-note a { color: var(--teal); }
+
+  .alert {
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    border: 1px solid var(--gold);
+    background: #fbf2d9;
+    color: #6f5214;
+  }
+  .alert[hidden] { display: none; }
+
+  .conditional[hidden] { display: none; }
+
+  [data-invalid] { border-color: #b4541f !important; }
+  [data-invalid].checkbox-grid { border: 1px solid #b4541f; border-radius: 6px; padding: 8px; }
+
+  footer {
+    background: var(--teal-darkest);
+    color: var(--cream);
+    padding: 48px 0;
+    text-align: center;
+  }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 8px; }
+  .footer-meta { font-size: 13px; opacity: 0.8; }
+  .footer-copy { font-size: 12px; opacity: 0.6; margin-top: 16px; }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+    section { padding: 44px 0; }
+    .page-head { margin-bottom: 32px; }
+    .form-card { padding: 26px 20px; }
+    .fieldset { margin-bottom: 28px; }
+
+    /* Paired inputs stack; the product checkboxes stay two-up so the page
+       doesn't turn into one very long column. */
+    .form-row { grid-template-columns: 1fr; }
+    .checkbox-grid { gap: 8px; }
+    .check { padding: 11px 12px; font-size: 13px; }
+
+    /* Three even columns instead of 2 + 1, which left "Not Sure Yet"
+       stranded on its own full-width row. */
+    .radio-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .radio-row .check { min-width: 0; padding: 11px 8px; font-size: 12px; }
+  }
+
+  /* "Not Sure Yet" needs more room than a product name, so the radios fall
+     back to a stacked list earlier than the checkboxes do. */
+  @media (max-width: 400px) {
+    .radio-row { grid-template-columns: 1fr; }
+    .radio-row .check { font-size: 13px; padding: 11px 12px; }
+  }
+
+  /* Narrowest phones: one product per row. */
+  @media (max-width: 340px) {
+    .checkbox-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<style>
+  .order-layout { display: grid; grid-template-columns: 1.6fr 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 900px) { .order-layout { grid-template-columns: 1fr; } }
+
+  .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .product-grid { grid-template-columns: 1fr; } }
+
+  .product {
+    border: 1px solid var(--line); border-radius: 8px; background: var(--cream);
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .product-img { aspect-ratio: 4 / 3; background: var(--cream-deep); overflow: hidden; }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .product-body { padding: 18px; display: flex; flex-direction: column; flex: 1; }
+  .product h3 { font-family: 'Playfair Display', serif; font-size: 19px; margin-bottom: 4px; }
+  .product .price { font-size: 14px; color: var(--teal-deep); font-weight: 600; margin-bottom: 8px; }
+  .product .desc { font-size: 13px; color: var(--ink-soft); line-height: 1.55; margin-bottom: 14px; }
+  .product .controls { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+  .product select, .product input {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px;
+    font-family: 'Inter', sans-serif; font-size: 14px; background: var(--cream); color: var(--ink);
+  }
+  .add-btn {
+    min-height: 44px; border: none; border-radius: 999px; background: var(--teal);
+    color: var(--cream); font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background .2s;
+  }
+  .add-btn:hover { background: var(--teal-deep); }
+
+  .cart {
+    border: 1px solid var(--line); border-radius: 8px; background: var(--cream);
+    padding: 22px; position: sticky; top: 92px;
+  }
+  @media (max-width: 900px) { .cart { position: static; } }
+  .cart h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 4px; }
+  .cart-line {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 12px 0; border-top: 1px solid var(--line);
+  }
+  .cart-line:first-of-type { border-top: 0; }
+  .cart-line .grow { flex: 1; min-width: 0; }
+  .cart-line .name { font-size: 14px; font-weight: 600; }
+  .cart-line .meta { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .cart-line .amount { font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .cart-line .remove {
+    border: 0; background: none; color: var(--ink-soft); cursor: pointer;
+    font-size: 18px; line-height: 1; padding: 0 2px;
+  }
+  .cart-line .remove:hover { color: #b4541f; }
+  .cart-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-top: 1px solid var(--line); margin-top: 8px; padding-top: 14px;
+    font-family: 'Playfair Display', serif; font-size: 20px;
+  }
+  .cart-empty { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+
+  #card-container {
+    border: 1px solid var(--line); border-radius: 6px; padding: 10px;
+    background: var(--cream); min-height: 60px;
+  }
+  .pay-btn {
+    width: 100%; margin-top: 16px; padding: 16px; background: var(--teal); color: var(--cream);
+    border: none; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: 13px;
+    font-weight: 600; letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
+  }
+  .pay-btn:hover { background: var(--teal-deep); }
+  .pay-btn:disabled { opacity: .6; cursor: progress; }
+  .step-title {
+    font-family: 'Playfair Display', serif; font-size: 22px; margin: 28px 0 4px;
+  }
+  .hint { font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; }
+  .closed-note {
+    border: 1px solid var(--gold); background: #fbf2d9; color: #6f5214;
+    border-radius: 6px; padding: 16px; font-size: 14px; line-height: 1.6;
+  }
+</style>
+
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">The Sweet Spot <span class="by-kam">by Kam</span></a>
+    <ul class="nav-links">
+      <li><a href="/#menu">Menu</a></li>
+      <li><a href="/#how">How It Works</a></li>
+      <li><a href="/#about">Our Story</a></li>
+      <li><a href="/#forms">Contact</a></li>
+      <li><a href="https://cash.app/order/$thesweetspotbykam" class="nav-cta">Order Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section>
+  <div class="container">
+    <div class="page-head">
+      <div class="eyebrow">Pre-Order</div>
+      <h1>Baked fresh, <span class="italic">just for you.</span></h1>
+      <p class="intro">Everything is made to order in small batches. Choose what you&rsquo;d like, pick a pickup day, and pay securely &mdash; we&rsquo;ll have it ready.</p>
+    </div>
+
+    <div id="closed" class="closed-note" hidden></div>
+
+    <div class="order-layout" id="layout">
+      <div>
+        <div id="menu" class="product-grid" aria-live="polite">
+          <p class="cart-empty">Loading the menu&hellip;</p>
+        </div>
+      </div>
+
+      <aside>
+        <div class="cart">
+          <h3>Your basket</h3>
+          <div id="cart-lines">
+            <p class="cart-empty">Nothing added yet. Pick something from the menu and it&rsquo;ll appear here.</p>
+          </div>
+          <div class="cart-total" id="cart-total" hidden>
+            <span>Total</span><span id="total-amount">$0.00</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div id="checkout" hidden>
+      <div class="form-card" style="margin-top:36px;">
+        <div class="alert" id="checkout-alert" role="alert" hidden></div>
+
+        <h2 class="step-title" style="margin-top:0;">Pickup</h2>
+        <p class="hint">Pickup days are Thursday to Sunday, and we need a few days&rsquo; notice to bake.</p>
+        <div class="form-group">
+          <label for="pickup_date">Pickup date<span class="req">*</span></label>
+          <select id="pickup_date" required></select>
+        </div>
+
+        <h2 class="step-title">Your details</h2>
+        <div class="form-row">
+          <div>
+            <label for="name">Full Name<span class="req">*</span></label>
+            <input type="text" id="name" autocomplete="name" required />
+          </div>
+          <div>
+            <label for="email">Email<span class="req">*</span></label>
+            <input type="email" id="email" autocomplete="email" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone <span class="optional">(optional)</span></label>
+          <input type="tel" id="phone" autocomplete="tel" />
+        </div>
+        <div class="form-group">
+          <label for="notes">Notes <span class="optional">(optional)</span></label>
+          <textarea id="notes" placeholder="Allergies, occasion, anything we should know"></textarea>
+        </div>
+
+        <h2 class="step-title">Payment</h2>
+        <p class="hint">Paid in full now. Your card details go straight to Square &mdash; they never touch this site.</p>
+        <div id="card-container"></div>
+        <button type="button" class="pay-btn" id="pay">Place order</button>
+        <p class="form-note">Questions? Text <a href="tel:6124702966">612-470-2966</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">The Sweet Spot by Kam</div>
+  <div class="footer-meta">Minneapolis, MN &middot; Pickup Thu&ndash;Sun &middot; Pre-Order Only</div>
+  <div class="footer-copy">&copy; 2026 The Sweet Spot by Kam &middot; All rights reserved</div>
+</footer>
+
+<script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+<script src="order.js"></script>
+
+</body>
+</html>
