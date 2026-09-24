@@ -24,6 +24,11 @@
     closed: document.getElementById('closed'),
     layout: document.getElementById('layout'),
     pickup: document.getElementById('pickup_date'),
+    calGrid: document.getElementById('cal-grid'),
+    calMonth: document.getElementById('cal-month'),
+    calPrev: document.getElementById('cal-prev'),
+    calNext: document.getElementById('cal-next'),
+    calChosen: document.getElementById('cal-chosen'),
     alert: document.getElementById('checkout-alert'),
     pay: document.getElementById('pay'),
   }
@@ -190,27 +195,113 @@
       })
   }
 
+  /* ------------------------------------------------------------ calendar */
+
+  var openDates = {}   // 'YYYY-MM-DD' -> true
+  var monthCursor = null
+
+  function ymd(year, month, day) {
+    return (
+      year + '-' + String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0')
+    )
+  }
+
+  function monthLabel(date) {
+    return date.toLocaleDateString('en-US', { timeZone: 'UTC', month: 'long', year: 'numeric' })
+  }
+
+  /** First and last month containing a bookable day, so navigation stops there. */
+  function monthBounds() {
+    var keys = Object.keys(openDates).sort()
+    if (keys.length === 0) return null
+    return {
+      first: new Date(keys[0].slice(0, 7) + '-01T00:00:00Z'),
+      last: new Date(keys[keys.length - 1].slice(0, 7) + '-01T00:00:00Z'),
+    }
+  }
+
+  function renderCalendar() {
+    var bounds = monthBounds()
+    if (!bounds || !monthCursor) {
+      els.calGrid.innerHTML = ''
+      els.calMonth.textContent = 'No dates available'
+      els.calPrev.disabled = true
+      els.calNext.disabled = true
+      return
+    }
+
+    var year = monthCursor.getUTCFullYear()
+    var month = monthCursor.getUTCMonth()
+    els.calMonth.textContent = monthLabel(monthCursor)
+    els.calPrev.disabled = monthCursor <= bounds.first
+    els.calNext.disabled = monthCursor >= bounds.last
+
+    // Monday-first: JS getUTCDay() is Sunday-first, so shift it.
+    var firstWeekday = (new Date(Date.UTC(year, month, 1)).getUTCDay() + 6) % 7
+    var daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate()
+    var cells = []
+
+    for (var blank = 0; blank < firstWeekday; blank++) {
+      cells.push('<span class="cal-day empty"></span>')
+    }
+
+    for (var day = 1; day <= daysInMonth; day++) {
+      var key = ymd(year, month, day)
+      if (openDates[key]) {
+        cells.push(
+          '<button type="button" class="cal-day open' +
+            (els.pickup.value === key ? ' chosen' : '') +
+            '" data-date="' + key + '" aria-label="' + key + '">' + day + '</button>',
+        )
+      } else {
+        cells.push('<span class="cal-day closed" aria-hidden="true">' + day + '</span>')
+      }
+    }
+
+    els.calGrid.innerHTML = cells.join('')
+  }
+
+  function chooseDate(key) {
+    els.pickup.value = key
+    var d = new Date(key + 'T00:00:00Z')
+    els.calChosen.textContent = d.toLocaleDateString('en-US', {
+      timeZone: 'UTC', weekday: 'long', month: 'long', day: 'numeric',
+    })
+    els.calChosen.classList.add('set')
+    renderCalendar()
+  }
+
+  els.calGrid.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-date]')
+    if (button) chooseDate(button.getAttribute('data-date'))
+  })
+
+  function shiftMonth(step) {
+    monthCursor = new Date(
+      Date.UTC(monthCursor.getUTCFullYear(), monthCursor.getUTCMonth() + step, 1),
+    )
+    renderCalendar()
+  }
+
+  els.calPrev.addEventListener('click', function () { shiftMonth(-1) })
+  els.calNext.addEventListener('click', function () { shiftMonth(1) })
+
   function loadDates() {
     return fetch(API + '/api/public/availability')
       .then(function (r) { return r.json() })
       .then(function (data) {
         var dates = data.dates || []
-        if (dates.length === 0) {
-          els.pickup.innerHTML = '<option value="">No dates available right now</option>'
-          return
-        }
-        els.pickup.innerHTML =
-          '<option value="">Choose a date</option>' +
-          dates.map(function (slot) {
-            var d = new Date(slot.date + 'T00:00:00Z')
-            var label = d.toLocaleDateString('en-US', {
-              timeZone: 'UTC', weekday: 'long', month: 'long', day: 'numeric',
-            })
-            return '<option value="' + slot.date + '">' + label + '</option>'
-          }).join('')
+        openDates = {}
+        dates.forEach(function (slot) { openDates[slot.date] = true })
+
+        var bounds = monthBounds()
+        // Open on the month holding the first bookable day, not today's.
+        monthCursor = bounds ? bounds.first : null
+        renderCalendar()
       })
       .catch(function () {
-        els.pickup.innerHTML = '<option value="">Could not load dates</option>'
+        els.calMonth.textContent = 'Could not load dates'
+        els.calGrid.innerHTML = ''
       })
   }
 

@@ -391,6 +391,50 @@
     font-family: 'Playfair Display', serif; font-size: 22px; margin: 28px 0 4px;
   }
   .hint { font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; }
+  .calendar {
+    border: 1px solid var(--line); border-radius: 8px; padding: 14px; background: var(--cream);
+  }
+  .cal-head {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+  }
+  .cal-head span {
+    font-family: 'Playfair Display', serif; font-size: 16px;
+  }
+  .cal-head button {
+    width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 6px;
+    background: var(--cream); color: var(--ink); font-size: 18px; line-height: 1;
+    cursor: pointer; transition: border-color .2s;
+  }
+  .cal-head button:hover:not(:disabled) { border-color: var(--teal); }
+  .cal-head button:disabled { opacity: .35; cursor: default; }
+
+  .cal-weekdays, .cal-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+  }
+  .cal-weekdays span {
+    text-align: center; font-size: 10px; font-weight: 600; color: var(--ink-soft);
+    letter-spacing: .06em; padding-bottom: 6px;
+  }
+  .cal-day {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    border: 1px solid transparent; border-radius: 6px; font-size: 13px;
+    background: none; font-family: 'Inter', sans-serif; color: var(--ink-soft);
+  }
+  /* Only days actually bookable look and behave like buttons. */
+  .cal-day.open {
+    cursor: pointer; color: var(--ink); border-color: var(--line); background: var(--cream-warm);
+  }
+  .cal-day.open:hover { border-color: var(--teal); }
+  .cal-day.closed { opacity: .3; }
+  .cal-day.empty { border: 0; }
+  .cal-day.chosen {
+    background: var(--teal); border-color: var(--teal); color: var(--cream); font-weight: 600;
+  }
+  .cal-chosen {
+    margin-top: 10px; font-size: 13px; color: var(--ink-soft); text-align: center;
+  }
+  .cal-chosen.set { color: var(--teal-deep); font-weight: 600; }
+
   .closed-note {
     border: 1px solid var(--gold); background: #fbf2d9; color: #6f5214;
     border-radius: 6px; padding: 16px; font-size: 14px; line-height: 1.6;
@@ -448,8 +492,20 @@
         <h2 class="step-title" style="margin-top:0;">Pickup</h2>
         <p class="hint">Pickup days are Thursday to Sunday, and we need a few days&rsquo; notice to bake.</p>
         <div class="form-group">
-          <label for="pickup_date">Pickup date<span class="req">*</span></label>
-          <select id="pickup_date" required></select>
+          <span class="choice-label">Pickup date<span class="req">*</span></span>
+          <div class="calendar" id="calendar">
+            <div class="cal-head">
+              <button type="button" id="cal-prev" aria-label="Previous month">&#8249;</button>
+              <span id="cal-month" aria-live="polite">&nbsp;</span>
+              <button type="button" id="cal-next" aria-label="Next month">&#8250;</button>
+            </div>
+            <div class="cal-weekdays" aria-hidden="true">
+              <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+            </div>
+            <div class="cal-grid" id="cal-grid" role="grid"></div>
+            <p class="cal-chosen" id="cal-chosen">No date chosen yet</p>
+          </div>
+          <input type="hidden" id="pickup_date" />
         </div>
 
         <h2 class="step-title">Your details</h2>
