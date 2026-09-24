@@ -62,17 +62,28 @@
             }).join('') + '</select>'
           : ''
 
+        var sizes =
+          '<select data-size="' + index + '" aria-label="Size for ' + esc(product.name) + '">' +
+          product.sizes.map(function (s) {
+            return '<option value="' + esc(s.id) + '">' + esc(s.label) + ' — ' + money(s.price) + '</option>'
+          }).join('') + '</select>'
+
         var image = product.image_url
           ? '<div class="product-img"><img src="/' + esc(product.image_url) + '" alt="' + esc(product.name) + '" loading="lazy" /></div>'
           : ''
+
+        // Cheapest first, so the headline price is the honest "from".
+        var from = product.sizes[0]
 
         return (
           '<article class="product">' + image +
           '<div class="product-body">' +
           '<h3>' + esc(product.name) + '</h3>' +
-          '<p class="price">' + money(product.price) + ' per ' + esc(product.unit) + '</p>' +
+          '<p class="price">' +
+          (product.sizes.length > 1 ? 'From ' + money(from.price) : money(from.price)) +
+          '</p>' +
           '<p class="desc">' + esc(product.description || '') + '</p>' +
-          '<div class="controls">' + flavours +
+          '<div class="controls">' + sizes + flavours +
           '<input type="number" min="' + product.min_quantity + '" value="' + product.min_quantity +
           '" step="1" data-qty="' + index + '" aria-label="Quantity of ' + esc(product.name) + '" />' +
           '<button type="button" class="add-btn" data-add="' + index + '">Add to basket</button>' +
@@ -96,16 +107,20 @@
     var product = products[index]
     var qtyInput = els.menu.querySelector('[data-qty="' + index + '"]')
     var flavorSelect = els.menu.querySelector('[data-flavor="' + index + '"]')
+    var sizeSelect = els.menu.querySelector('[data-size="' + index + '"]')
     var quantity = Math.max(product.min_quantity, Math.floor(Number(qtyInput.value) || 0))
     var flavor = flavorSelect ? flavorSelect.value : null
+    var sizeId = sizeSelect.value
+    var size = product.sizes.filter(function (s) { return s.id === sizeId })[0]
+    if (!size) return
 
-    // Same product and flavour merges rather than making a second line.
+    // Same product, size and flavour merges rather than making a new line.
     var existing = cart.filter(function (line) {
-      return line.product_id === product.id && line.flavor === flavor
+      return line.size_id === sizeId && line.flavor === flavor
     })[0]
 
     if (existing) existing.quantity += quantity
-    else cart.push({ product_id: product.id, quantity: quantity, flavor: flavor, product: product })
+    else cart.push({ size_id: sizeId, quantity: quantity, flavor: flavor, product: product, size: size })
 
     renderCart()
   })
@@ -114,7 +129,7 @@
 
   function cartTotal() {
     return cart.reduce(function (sum, line) {
-      return sum + line.product.price * line.quantity
+      return sum + line.size.price * line.quantity
     }, 0)
   }
 
@@ -132,9 +147,9 @@
         return (
           '<div class="cart-line">' +
           '<div class="grow"><div class="name">' + esc(line.product.name) + '</div>' +
-          '<div class="meta">' + line.quantity + ' × ' + esc(line.product.unit) +
+          '<div class="meta">' + line.quantity + ' × ' + esc(line.size.label) +
           (line.flavor ? ' · ' + esc(line.flavor) : '') + '</div></div>' +
-          '<div class="amount">' + money(line.product.price * line.quantity) + '</div>' +
+          '<div class="amount">' + money(line.size.price * line.quantity) + '</div>' +
           '<button type="button" class="remove" data-remove="' + index + '" aria-label="Remove ' +
           esc(line.product.name) + '">×</button></div>'
         )
@@ -253,7 +268,7 @@
             notes: document.getElementById('notes').value.trim(),
             pickup_date: pickup,
             items: cart.map(function (line) {
-              return { product_id: line.product_id, quantity: line.quantity, flavor: line.flavor }
+              return { size_id: line.size_id, quantity: line.quantity, flavor: line.flavor }
             }),
           }),
         })
