@@ -73,8 +73,15 @@
             return '<option value="' + esc(s.id) + '">' + esc(s.label) + ' — ' + money(s.price) + '</option>'
           }).join('') + '</select>'
 
+        // A photo uploaded in the dashboard arrives as a full URL and is used
+        // as given. An older entry is a path relative to this site, so it
+        // still needs the leading slash it has always had.
+        var src = /^https?:\/\//.test(product.image_url || '')
+          ? product.image_url
+          : '/' + product.image_url
+
         var image = product.image_url
-          ? '<div class="product-img"><img src="/' + esc(product.image_url) + '" alt="' + esc(product.name) + '" loading="lazy" /></div>'
+          ? '<div class="product-img"><img src="' + esc(src) + '" alt="' + esc(product.name) + '" loading="lazy" /></div>'
           : ''
 
         // Cheapest first, so the headline price is the honest "from".
