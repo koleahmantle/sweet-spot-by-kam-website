@@ -342,9 +342,18 @@
 
   .cart {
     border: 1px solid var(--line); border-radius: 8px; background: var(--cream);
-    padding: 22px; position: sticky; top: 92px;
+    padding: 22px;
   }
-  @media (max-width: 900px) { .cart { position: static; } }
+
+  /* The checkout sits under the basket in the same column, so it drops the
+     card framing and its paired fields stack -- the column is too narrow
+     for two across. */
+  #checkout .form-card {
+    max-width: none; margin: 16px 0 0; padding: 22px;
+  }
+  #checkout .form-row { grid-template-columns: 1fr; }
+  #checkout .step-title { font-size: 19px; margin: 22px 0 4px; }
+  #checkout .step-title:first-of-type { margin-top: 0; }
   .cart h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 4px; }
   .cart-line {
     display: flex; gap: 10px; align-items: flex-start;
@@ -431,10 +440,8 @@
             <span>Total</span><span id="total-amount">$0.00</span>
           </div>
         </div>
-      </aside>
-    </div>
 
-    <div id="checkout" hidden>
+        <div id="checkout" hidden>
       <div class="form-card" style="margin-top:36px;">
         <div class="alert" id="checkout-alert" role="alert" hidden></div>
 
@@ -471,7 +478,10 @@
         <button type="button" class="pay-btn" id="pay">Place order</button>
         <p class="form-note">Questions? Text <a href="tel:6124702966">612-470-2966</a>.</p>
       </div>
+        </div>
+      </aside>
     </div>
+
   </div>
 </section>
 
