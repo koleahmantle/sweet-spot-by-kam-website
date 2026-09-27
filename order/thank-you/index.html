@@ -109,7 +109,22 @@
   }
   .pickup strong { color: var(--teal-deep); }
 
-  .send { text-align: left; margin: 0 0 28px; }
+  .emailed { font-size: 14px; color: var(--ink-soft); margin: 0 0 6px; line-height: 1.6; }
+  .emailed[hidden], .resend-toggle[hidden] { display: none; }
+  .emailed strong { color: var(--ink); font-weight: 500; }
+  .resend-toggle {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    font-size: 14px;
+    color: var(--teal-deep);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    margin-bottom: 24px;
+  }
+  .send { text-align: left; margin: 14px 0 28px; }
   .send label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-bottom: 8px; }
   .send-row { display: flex; gap: 10px; flex-wrap: wrap; }
   .send input {
@@ -170,8 +185,11 @@
       <div class="pickup"><strong>Pickup</strong><br /><span id="receipt-pickup"></span></div>
     </section>
 
+    <p class="emailed" id="emailed" hidden>A copy of your receipt has been emailed to <strong id="emailed-to"></strong>.</p>
+    <button type="button" class="resend-toggle" id="resend-toggle" hidden>Didn&rsquo;t get it? Send it again or to a different email</button>
+
     <form class="send" id="send" hidden novalidate>
-      <label for="send-email">Email me this receipt</label>
+      <label for="send-email">Send my receipt to</label>
       <div class="send-row">
         <input type="email" id="send-email" autocomplete="email" required />
         <button type="submit" id="send-button">Send receipt</button>
@@ -231,7 +249,25 @@
   var button = document.getElementById('send-button')
   var status = document.getElementById('send-status')
   input.value = data.email || ''
-  form.hidden = false
+
+  // The receipt is emailed automatically at checkout. The form is only
+  // for a typo'd address or one lost to spam, so it stays folded away
+  // until asked for, and nothing is resent unless the customer asks.
+  var emailed = document.getElementById('emailed')
+  var toggle = document.getElementById('resend-toggle')
+  if (data.email) {
+    document.getElementById('emailed-to').textContent = data.email
+    emailed.hidden = false
+    toggle.hidden = false
+    toggle.addEventListener('click', function () {
+      toggle.hidden = true
+      form.hidden = false
+      input.focus()
+      input.select()
+    })
+  } else {
+    form.hidden = false
+  }
 
   form.addEventListener('submit', function (event) {
     event.preventDefault()
