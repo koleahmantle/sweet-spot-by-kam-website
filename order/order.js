@@ -378,8 +378,15 @@
         })
       })
       .then(function (data) {
-        // The receipt is emailed by the dashboard, from the bakery's own
-        // address; Square does not send one for payments taken here.
+        // The thank-you page shows the receipt and offers to email it. It is
+        // handed over through this tab's session storage, not the URL.
+        try {
+          if (data.receipt) {
+            var receipt = data.receipt
+            receipt.order_id = data.order_id
+            sessionStorage.setItem('sweetspot-receipt', JSON.stringify(receipt))
+          }
+        } catch (e) {}
         location.href = '/order/thank-you/'
       })
       .catch(function (error) {

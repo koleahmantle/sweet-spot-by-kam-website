@@ -76,17 +76,197 @@
   .btn-primary:hover { background: var(--teal-deep); }
   .btn-secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
   .btn-secondary:hover { background: var(--ink); color: var(--cream); }
-  @media (max-width: 600px) { h1 { font-size: 32px; } }
+  @media (max-width: 600px) { h1 { font-size: 32px; } body { padding: 24px 16px; } }
+
+  /* The receipt: what was charged, laid out like a paper receipt, so the
+     customer sees exactly what they paid for before they leave. */
+  .receipt {
+    text-align: left;
+    background: #fffdf9;
+    border: 1px solid #e5dcc8;
+    border-radius: 16px;
+    padding: 26px 28px;
+    margin: 0 0 20px;
+    box-shadow: 0 1px 3px rgba(31,42,38,0.04), 0 8px 24px rgba(31,42,38,0.06);
+  }
+  .receipt[hidden], .send[hidden] { display: none; }
+  .receipt-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .receipt-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 20px; }
+  .receipt-meta { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+  .receipt table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+  .receipt td { padding: 9px 0; border-top: 1px solid #eee4d2; vertical-align: top; }
+  .receipt td.qty { color: var(--ink-soft); white-space: nowrap; padding-left: 8px; }
+  .receipt td.amt { text-align: right; white-space: nowrap; padding-left: 12px; }
+  .receipt tr.total td { border-top: 2px solid #e5dcc8; padding-top: 12px; font-weight: 600; font-size: 16px; }
+  .receipt tr.total td.amt { color: var(--teal-deep); }
+  .receipt-foot { margin-top: 14px; font-size: 13px; color: var(--ink-soft); }
+  .pickup {
+    margin-top: 16px;
+    background: #eef5f3;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+  .pickup strong { color: var(--teal-deep); }
+
+  .send { text-align: left; margin: 0 0 28px; }
+  .send label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-bottom: 8px; }
+  .send-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .send input {
+    flex: 1 1 220px;
+    min-width: 0;
+    padding: 13px 14px;
+    border: 1px solid #e5dcc8;
+    border-radius: 10px;
+    font: inherit;
+    font-size: 15px;
+    background: #fffdf9;
+    color: var(--ink);
+  }
+  .send input:focus { outline: none; border-color: var(--teal); }
+  .send button {
+    padding: 13px 22px;
+    border-radius: 999px;
+    border: 0;
+    background: var(--teal);
+    color: var(--cream);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .send button:hover { background: var(--teal-deep); }
+  .send button:disabled { opacity: 0.6; cursor: progress; }
+  .send-status { font-size: 13px; margin: 10px 0 0; min-height: 1em; }
+  .send-status.ok { color: var(--teal-deep); }
+  .send-status.error { color: #b4541f; }
+  .print-link { background: none; border: 0; font: inherit; font-size: 14px; color: var(--ink-soft); text-decoration: underline; cursor: pointer; }
+
+  @media print {
+    body { display: block; padding: 0; background: #fff; }
+    .icon, .send, .actions, .print-link { display: none !important; }
+    .receipt { box-shadow: none; border-color: #ccc; }
+  }
 </style>
 </head>
 <body>
   <div class="thank-you">
     <div class="icon">&#10022;</div>
     <h1>Your order is <span class="italic">in the oven.</span></h1>
-    <p>Thank you! Your payment went through and your order is confirmed. Your receipt is on its way to your inbox, and I&rsquo;ll be in touch before your pickup day with the address and timing.</p>
+    <p>Thank you! Your payment went through and your order is confirmed. I&rsquo;ll be in touch before your pickup day with the address and timing.</p>
+
+    <section class="receipt" id="receipt" aria-label="Your receipt" hidden>
+      <div class="receipt-head">
+        <div class="receipt-title">The Sweet Spot by Kam</div>
+        <div class="receipt-meta" id="receipt-number"></div>
+      </div>
+      <table>
+        <tbody id="receipt-lines"></tbody>
+        <tfoot>
+          <tr class="total"><td colspan="2">Total paid</td><td class="amt" id="receipt-total"></td></tr>
+        </tfoot>
+      </table>
+      <p class="receipt-foot" id="receipt-paid"></p>
+      <div class="pickup"><strong>Pickup</strong><br /><span id="receipt-pickup"></span></div>
+    </section>
+
+    <form class="send" id="send" hidden novalidate>
+      <label for="send-email">Email me this receipt</label>
+      <div class="send-row">
+        <input type="email" id="send-email" autocomplete="email" required />
+        <button type="submit" id="send-button">Send receipt</button>
+      </div>
+      <p class="send-status" id="send-status" role="status"></p>
+    </form>
+
     <div class="actions">
       <a href="/" class="btn btn-primary">Return to Home</a>
+      <button type="button" class="print-link" id="print" hidden>Print receipt</button>
     </div>
   </div>
+
+<script>
+(function () {
+  var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+  var API = isLocal ? 'http://localhost:3000' : 'https://dashboard.thesweetspotbykam.com'
+
+  // Checkout leaves the receipt here for this tab only. It is never put in
+  // the address bar, where it would end up in history and shared links.
+  var data = null
+  try { data = JSON.parse(sessionStorage.getItem('sweetspot-receipt') || 'null') } catch (e) {}
+  if (!data || !data.lines) return
+
+  function money(cents) {
+    return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  }
+  // textContent throughout: a name or item typed by a customer is shown as
+  // text, never interpreted as HTML.
+  function cell(text, cls) {
+    var td = document.createElement('td')
+    if (cls) td.className = cls
+    td.textContent = text
+    return td
+  }
+
+  document.getElementById('receipt-number').textContent = 'Order #' + data.order_number
+  var body = document.getElementById('receipt-lines')
+  data.lines.forEach(function (line) {
+    var tr = document.createElement('tr')
+    tr.appendChild(cell(line.label))
+    tr.appendChild(cell('\u00d7 ' + line.count, 'qty'))
+    tr.appendChild(cell(money(line.total_cents), 'amt'))
+    body.appendChild(tr)
+  })
+  document.getElementById('receipt-total').textContent = money(data.total_cents)
+  document.getElementById('receipt-paid').textContent = 'Paid by card on ' + data.paid_on + '.'
+  document.getElementById('receipt-pickup').textContent = data.pickup
+  document.getElementById('receipt').hidden = false
+
+  var print = document.getElementById('print')
+  print.hidden = false
+  print.addEventListener('click', function () { window.print() })
+
+  var form = document.getElementById('send')
+  var input = document.getElementById('send-email')
+  var button = document.getElementById('send-button')
+  var status = document.getElementById('send-status')
+  input.value = data.email || ''
+  form.hidden = false
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault()
+    var email = input.value.trim()
+    if (!/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(email)) {
+      status.className = 'send-status error'
+      status.textContent = 'Please enter a valid email address.'
+      return
+    }
+    button.disabled = true
+    status.className = 'send-status'
+    status.textContent = 'Sending\u2026'
+    fetch(API + '/api/public/receipt', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ order_id: data.order_id, token: data.token, email: email }),
+    })
+      .then(function (response) {
+        return response.json().catch(function () { return {} }).then(function (json) {
+          if (!response.ok) throw new Error(json.error || 'Could not send your receipt.')
+          return json
+        })
+      })
+      .then(function () {
+        status.className = 'send-status ok'
+        status.textContent = 'Sent to ' + email + '. Check your inbox.'
+        button.textContent = 'Send again'
+      })
+      .catch(function (error) {
+        status.className = 'send-status error'
+        status.textContent = error.message
+      })
+      .then(function () { button.disabled = false })
+  })
+})()
+</script>
 </body>
 </html>
