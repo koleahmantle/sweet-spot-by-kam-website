@@ -39,57 +39,73 @@
   nav {
     position: sticky;
     top: 0;
-    z-index: 50;
-    background: rgba(250,246,239,0.92);
-    backdrop-filter: blur(8px);
+    z-index: 100;
+    background: rgba(250, 246, 239, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
+    padding: 18px 0;
   }
   .nav-inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 18px 32px;
+    padding: 0 32px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    align-items: center;
   }
   .nav-logo {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 19px;
     color: var(--ink);
     text-decoration: none;
-    white-space: nowrap;
   }
-  .nav-logo .by-kam { font-style: italic; font-weight: 400; color: var(--teal-deep); }
-  .nav-links { list-style: none; display: flex; align-items: center; gap: 28px; }
+  .nav-logo .by-kam {
+    font-style: italic;
+    color: var(--teal);
+    font-weight: 400;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    align-items: center;
+  }
   .nav-links a {
-    font-size: 14px;
     color: var(--ink-soft);
     text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
     transition: color 0.2s;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
-  .nav-links a:hover { color: var(--teal-deep); }
+  .nav-links a:hover { color: var(--ink); }
   .nav-cta {
-    white-space: nowrap;
-    background: var(--teal);
+    background: var(--teal) !important;
     color: var(--cream) !important;
-    padding: 10px 20px;
+    padding: 11px 22px;
     border-radius: 999px;
-    font-weight: 500;
+    letter-spacing: 0.14em !important;
+    transition: background 0.2s !important;
   }
-  .nav-cta:hover { background: var(--teal-deep); }
+  .nav-cta:hover { background: var(--teal-deep) !important; }
 
-  /* Matches the homepage, which drops its nav links at this width. */
   @media (max-width: 720px) {
-    /* Room is tight, so the section links give way to the one action that
-       matters here. The logo still returns to the homepage. */
     .nav-links { gap: 16px; }
     .nav-links li:not(:last-child) { display: none; }
-    .nav-inner { padding: 14px 20px; gap: 12px; }
-    .nav-logo { font-size: 17px; }
-    .nav-cta { padding: 9px 16px; font-size: 13px; }
   }
+  /* Events sits beside Order Now as an outlined pill: it opens a page of
+     its own, like ordering, rather than scrolling to a section, so it is
+     styled as an action and kept apart from the section links. */
+  .nav-alt {
+    border: 1px solid var(--teal) !important;
+    color: var(--teal-deep) !important;
+    padding: 10px 20px;
+    border-radius: 999px;
+  }
+  .nav-alt:hover { background: var(--teal-bg); }
 
   .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
   section { padding: 72px 0; }
@@ -109,45 +125,154 @@
   }
   .eyebrow::before { content: "\2726"; color: var(--gold); font-size: 10px; }
 
-  .page-head { text-align: center; max-width: 720px; margin: 0 auto 44px; }
-  .page-head h1 {
+  /* Hero band, matching the home page: warm cream, bold serif, the teal
+     tag pill, and a photo -- rather than a centred paragraph on a blank
+     page. */
+  .event-hero { background: var(--cream-warm); padding: 64px 0 72px; }
+  .event-hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--teal-bg);
+    padding: 8px 16px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+  .hero-tag::before { content: "\2726"; color: var(--gold); }
+  .event-hero h1 {
     font-family: 'Playfair Display', serif;
-    font-weight: 400;
-    font-size: 46px;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: clamp(40px, 5.6vw, 64px);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    color: var(--ink);
   }
-  .page-head h1 .italic { font-style: italic; color: var(--teal-deep); }
-  .page-head p.intro {
-    color: var(--ink-soft);
+  .event-hero h1 .italic { font-style: italic; color: var(--teal); }
+  .event-hero .intro {
     font-size: 17px;
-    line-height: 1.7;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 22px 0 28px;
+    max-width: 520px;
   }
-  @media (max-width: 600px) { .page-head h1 { font-size: 34px; } }
+  .event-steps { list-style: none; display: grid; gap: 12px; max-width: 520px; }
+  .event-steps li { display: flex; gap: 14px; align-items: baseline; font-size: 14px; color: var(--ink); }
+  .event-steps span {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: var(--teal);
+    color: var(--cream);
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(6px);
+  }
+  .event-hero-photo {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    aspect-ratio: 4 / 5;
+  }
+  .event-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .event-hero-photo .badge {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .event-hero-photo .badge small {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  @media (max-width: 860px) {
+    .event-hero-inner { grid-template-columns: 1fr; gap: 36px; }
+    .event-hero-photo { aspect-ratio: 16 / 10; }
+  }
 
-  .form-card {
-    max-width: 720px;
-    margin: 0 auto;
-    background: var(--cream);
+  /* The form sits on a deeper cream band and is split into numbered cards,
+     one per part, instead of one long pale sheet. */
+  .form-band { background: var(--cream-deep); padding: 64px 0 80px; }
+  .form-card { max-width: 760px; margin: 0 auto; }
+  .fieldset {
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 44px;
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 30px 32px 18px;
+    margin-bottom: 18px;
     box-shadow: var(--shadow);
   }
-  .fieldset { border: 0; margin-bottom: 36px; }
-  .fieldset:last-of-type { margin-bottom: 20px; }
   .fieldset legend {
+    float: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    margin-bottom: 4px;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--ink);
     padding: 0;
+    margin-bottom: 4px;
   }
+  .fieldset legend::before {
+    content: counter(part, decimal-leading-zero);
+    counter-increment: part;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: var(--teal);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fieldset legend + * { clear: both; }
+  form { counter-reset: part; }
   .fieldset .hint {
     color: var(--ink-soft);
     font-size: 13px;
-    margin-bottom: 22px;
+    margin: 0 0 22px 46px;
   }
+  .submit-panel {
+    background: var(--teal-darkest);
+    color: var(--cream);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-top: 8px;
+  }
+  .submit-panel p.lead { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 16px; }
+  .submit-panel .form-note { color: rgba(250, 246, 239, 0.8); }
+  .submit-panel .form-note a { color: var(--gold-soft); }
 
   .form-row {
     display: grid;
@@ -186,7 +311,7 @@
     border-radius: 6px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    background: var(--cream);
+    background: #fffdf9;
     color: var(--ink);
     transition: border-color 0.2s;
   }
@@ -248,6 +373,8 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+  .submit-panel .form-submit { background: var(--gold); color: var(--ink); }
+  .submit-panel .form-submit:hover { background: var(--gold-soft); }
   .form-submit:hover { background: var(--teal-deep); }
   .form-submit:disabled { opacity: 0.6; cursor: progress; }
   .form-note { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 14px; }
@@ -283,7 +410,12 @@
     .container { padding: 0 20px; }
     section { padding: 44px 0; }
     .page-head { margin-bottom: 32px; }
-    .form-card { padding: 26px 20px; }
+    .fieldset { padding: 24px 18px 12px; border-radius: 14px; }
+    .fieldset .hint { margin-left: 0; }
+    .fieldset legend { font-size: 21px; }
+    .submit-panel { padding: 24px 18px; }
+    .event-hero { padding: 40px 0 48px; }
+    .form-band { padding: 36px 0 48px; }
     .fieldset { margin-bottom: 28px; }
 
     /* Paired inputs stack; the product checkboxes stay two-up so the page
@@ -320,21 +452,36 @@
       <li><a href="/#menu">Menu</a></li>
       <li><a href="/#how">How It Works</a></li>
       <li><a href="/#about">Our Story</a></li>
-      <li><a href="/event-inquiry">Events</a></li>
       <li><a href="/#forms">Contact</a></li>
+      <li><a href="/event-inquiry" class="nav-alt">Events</a></li>
       <li><a href="/order" class="nav-cta">Order Now</a></li>
     </ul>
   </div>
 </nav>
 
-<section>
+<section class="event-hero">
   <div class="container">
-    <div class="page-head">
-      <div class="eyebrow">Event Inquiry</div>
-      <h1>Let's plan something <span class="italic">beautiful.</span></h1>
-      <p class="intro">I&rsquo;d love to learn more about your celebration and what you&rsquo;re envisioning. Please complete the form below with as much detail as you can. Once I review your information, I&rsquo;ll follow up with availability, options, and pricing.</p>
+    <div class="event-hero-inner">
+      <div>
+        <div class="hero-tag">Weddings &middot; Showers &middot; Celebrations</div>
+        <h1>Let's plan something <span class="italic">beautiful.</span></h1>
+        <p class="intro">I&rsquo;d love to learn more about your celebration and what you&rsquo;re envisioning. Complete the form below with as much detail as you can, and I&rsquo;ll follow up with availability, options, and pricing.</p>
+        <ol class="event-steps">
+          <li><span>1</span>Tell me about your event and what you have in mind.</li>
+          <li><span>2</span>I&rsquo;ll follow up with availability, options, and pricing.</li>
+          <li><span>3</span>We settle the details together and lock in your date.</li>
+        </ol>
+      </div>
+      <div class="event-hero-photo">
+        <img src="/images/mult_lemon_cupcakes.jpeg" alt="A tray of lemon cupcakes" />
+        <div class="badge">Made to order<small>Small-batch, for your day</small></div>
+      </div>
     </div>
+  </div>
+</section>
 
+<section class="form-band">
+  <div class="container">
     <div class="form-card">
       <div class="alert" id="form-alert" role="alert" hidden></div>
 
@@ -504,8 +651,11 @@
           </div>
         </fieldset>
 
+        <div class="submit-panel">
+          <p class="lead">Ready when you are.</p>
         <button type="submit" class="form-submit" id="submit-button">Submit Inquiry</button>
         <p class="form-note">Prefer to talk it through? Text <a href="tel:6124702966">612-470-2966</a> or email <a href="mailto:hello@thesweetspotbykam.com">hello@thesweetspotbykam.com</a>.</p>
+        </div>
       </form>
     </div>
   </div>

@@ -96,6 +96,17 @@
     .nav-links li:not(:last-child) { display: none; }
   }
 
+  /* Events sits beside Order Now as an outlined pill: it opens a page of
+     its own, like ordering, rather than scrolling to a section, so it is
+     styled as an action and kept apart from the section links. */
+  .nav-alt {
+    border: 1px solid var(--teal) !important;
+    color: var(--teal-deep) !important;
+    padding: 10px 20px;
+    border-radius: 999px;
+  }
+  .nav-alt:hover { background: var(--teal-bg); }
+
   .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
   section { padding: 96px 0; }
   .eyebrow {
@@ -794,8 +805,8 @@
       <li><a href="#menu">Menu</a></li>
       <li><a href="#how">How It Works</a></li>
       <li><a href="#about">Our Story</a></li>
-      <li><a href="/event-inquiry">Events</a></li>
       <li><a href="#forms">Contact</a></li>
+      <li><a href="/event-inquiry" class="nav-alt">Events</a></li>
       <li><a href="/order" class="nav-cta">Order Now</a></li>
     </ul>
   </div>

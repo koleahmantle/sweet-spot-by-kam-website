@@ -39,57 +39,73 @@
   nav {
     position: sticky;
     top: 0;
-    z-index: 50;
-    background: rgba(250,246,239,0.92);
-    backdrop-filter: blur(8px);
+    z-index: 100;
+    background: rgba(250, 246, 239, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
+    padding: 18px 0;
   }
   .nav-inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 18px 32px;
+    padding: 0 32px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    align-items: center;
   }
   .nav-logo {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 19px;
     color: var(--ink);
     text-decoration: none;
-    white-space: nowrap;
   }
-  .nav-logo .by-kam { font-style: italic; font-weight: 400; color: var(--teal-deep); }
-  .nav-links { list-style: none; display: flex; align-items: center; gap: 28px; }
+  .nav-logo .by-kam {
+    font-style: italic;
+    color: var(--teal);
+    font-weight: 400;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    align-items: center;
+  }
   .nav-links a {
-    font-size: 14px;
     color: var(--ink-soft);
     text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
     transition: color 0.2s;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
-  .nav-links a:hover { color: var(--teal-deep); }
+  .nav-links a:hover { color: var(--ink); }
   .nav-cta {
-    white-space: nowrap;
-    background: var(--teal);
+    background: var(--teal) !important;
     color: var(--cream) !important;
-    padding: 10px 20px;
+    padding: 11px 22px;
     border-radius: 999px;
-    font-weight: 500;
+    letter-spacing: 0.14em !important;
+    transition: background 0.2s !important;
   }
-  .nav-cta:hover { background: var(--teal-deep); }
+  .nav-cta:hover { background: var(--teal-deep) !important; }
 
-  /* Matches the homepage, which drops its nav links at this width. */
   @media (max-width: 720px) {
-    /* Room is tight, so the section links give way to the one action that
-       matters here. The logo still returns to the homepage. */
     .nav-links { gap: 16px; }
     .nav-links li:not(:last-child) { display: none; }
-    .nav-inner { padding: 14px 20px; gap: 12px; }
-    .nav-logo { font-size: 17px; }
-    .nav-cta { padding: 9px 16px; font-size: 13px; }
   }
+  /* Events sits beside Order Now as an outlined pill: it opens a page of
+     its own, like ordering, rather than scrolling to a section, so it is
+     styled as an action and kept apart from the section links. */
+  .nav-alt {
+    border: 1px solid var(--teal) !important;
+    color: var(--teal-deep) !important;
+    padding: 10px 20px;
+    border-radius: 999px;
+  }
+  .nav-alt:hover { background: var(--teal-bg); }
 
   .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
   section { padding: 72px 0; }
@@ -451,8 +467,8 @@
       <li><a href="/#menu">Menu</a></li>
       <li><a href="/#how">How It Works</a></li>
       <li><a href="/#about">Our Story</a></li>
-      <li><a href="/event-inquiry">Events</a></li>
       <li><a href="/#forms">Contact</a></li>
+      <li><a href="/event-inquiry" class="nav-alt">Events</a></li>
       <li><a href="/order" class="nav-cta">Order Now</a></li>
     </ul>
   </div>
