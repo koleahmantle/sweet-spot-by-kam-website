@@ -83,22 +83,10 @@
   <div class="thank-you">
     <div class="icon">&#10022;</div>
     <h1>Your order is <span class="italic">in the oven.</span></h1>
-    <p>Thank you! Your payment went through and your order is confirmed. You&rsquo;ll get an email receipt, and I&rsquo;ll be in touch before your pickup day with the address and timing.</p>
+    <p>Thank you! Your payment went through and your order is confirmed. Your receipt is on its way to your inbox, and I&rsquo;ll be in touch before your pickup day with the address and timing.</p>
     <div class="actions">
       <a href="/" class="btn btn-primary">Return to Home</a>
-      <a href="#" class="btn btn-secondary" id="receipt" hidden>View Receipt</a>
     </div>
   </div>
-<script>
-  // Square's receipt link is passed through so the customer can keep it.
-  var receipt = new URLSearchParams(location.search).get('receipt');
-  if (receipt && /^https:\/\/[^\s]+$/.test(receipt)) {
-    var link = document.getElementById('receipt');
-    link.href = receipt;
-    link.target = '_blank';
-    link.rel = 'noopener';
-    link.hidden = false;
-  }
-</script>
 </body>
 </html>

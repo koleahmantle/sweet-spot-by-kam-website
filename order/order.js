@@ -378,8 +378,9 @@
         })
       })
       .then(function (data) {
-        var query = data.receipt_url ? '?receipt=' + encodeURIComponent(data.receipt_url) : ''
-        location.href = '/order/thank-you/' + query
+        // The receipt is emailed by the dashboard, from the bakery's own
+        // address; Square does not send one for payments taken here.
+        location.href = '/order/thank-you/'
       })
       .catch(function (error) {
         showAlert(error.message || 'Something went wrong. Please try again.')
