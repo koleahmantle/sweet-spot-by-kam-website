@@ -100,8 +100,10 @@
     .nav-links { gap: 12px; }
     .nav-links li:not(:nth-last-child(-n+2)) { display: none; }
   }
+  /* Phones: just the logo and the menu button. Order Now leads the
+     dropdown, and the page itself opens with it. */
   @media (max-width: 560px) {
-    .nav-links li:not(:last-child) { display: none; }
+    .nav-links { display: none; }
   }
   @media (max-width: 420px) {
     .nav-inner { padding: 0 18px; gap: 12px; }
@@ -182,7 +184,7 @@
   .nav-drawer a:hover { color: var(--teal-deep); }
   .nav-drawer .drawer-actions {
     max-width: 1200px;
-    margin: 10px auto 0;
+    margin: 12px auto 8px;
     padding: 0 32px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -569,16 +571,16 @@
     </div>
   </div>
   <div class="nav-drawer" id="nav-drawer">
+    <div class="drawer-actions">
+      <a href="/order" class="drawer-order">Order Now</a>
+      <a href="/event-inquiry" class="drawer-event">Plan an Event</a>
+    </div>
     <ul>
       <li><a href="/#menu">Menu</a></li>
       <li><a href="/#how">How It Works</a></li>
       <li><a href="/#about">Our Story</a></li>
       <li><a href="/#forms">Contact</a></li>
     </ul>
-    <div class="drawer-actions">
-      <a href="/event-inquiry" class="drawer-event">Plan an Event</a>
-      <a href="/order" class="drawer-order">Order Now</a>
-    </div>
   </div>
 </nav>
 
