@@ -108,7 +108,8 @@
     .nav-cta { padding: 10px 16px; }
   }
   @media (max-width: 350px) {
-    .nav-logo { font-size: 16px; }
+    .nav-inner { padding: 0 12px; }
+    .nav-logo { font-size: 15px; }
     .nav-cta { padding: 9px 12px; letter-spacing: 0.08em !important; }
   }
   /* Events sits beside Order Now as an outlined pill: it opens a page of
@@ -121,6 +122,96 @@
     border-radius: 999px;
   }
   .nav-alt:hover { background: var(--teal-bg); }
+
+  /* The dropdown: on screens too narrow for every link, a menu button
+     opens them all below the bar, so nobody has to scroll to find one. */
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--ink);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  nav.open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  nav.open .nav-toggle span:nth-child(2) { opacity: 0; }
+  nav.open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-toggle:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  .nav-drawer {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 16px 32px rgba(31, 42, 38, 0.10);
+    padding: 6px 0 22px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+  nav.open .nav-drawer { display: block; }
+  .nav-drawer ul { list-style: none; max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .nav-drawer li + li { border-top: 1px solid var(--line); }
+  .nav-drawer a {
+    display: block;
+    padding: 15px 0;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .nav-drawer a:hover { color: var(--teal-deep); }
+  .nav-drawer .drawer-actions {
+    max-width: 1200px;
+    margin: 10px auto 0;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .nav-drawer .drawer-actions a {
+    text-align: center;
+    border-radius: 999px;
+    padding: 13px 10px;
+    font-size: 12px;
+  }
+  .nav-drawer .drawer-event { border: 1px solid var(--teal); color: var(--teal-deep); }
+  .nav-drawer .drawer-order { background: var(--teal); color: var(--cream); }
+  .nav-drawer .drawer-order:hover { background: var(--teal-deep); color: var(--cream); }
+
+  @media (max-width: 1000px) {
+    .nav-toggle { display: inline-flex; }
+  }
+  @media (min-width: 1001px) {
+    .nav-drawer { display: none !important; }
+  }
+  @media (max-width: 420px) {
+    .nav-right { gap: 8px; }
+    .nav-drawer ul, .nav-drawer .drawer-actions { padding: 0 18px; }
+  }
+  @media (max-width: 350px) {
+    .nav-right { gap: 6px; }
+    .nav-toggle { width: 36px; height: 36px; }
+  }
 
   .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
   section { padding: 72px 0; }
@@ -463,6 +554,7 @@
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">The Sweet Spot <span class="by-kam">by Kam</span></a>
+    <div class="nav-right">
     <ul class="nav-links">
       <li><a href="/#menu">Menu</a></li>
       <li><a href="/#how">How It Works</a></li>
@@ -471,6 +563,22 @@
       <li><a href="/event-inquiry" class="nav-alt">Events</a></li>
       <li><a href="/order" class="nav-cta">Order Now</a></li>
     </ul>
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    </div>
+  </div>
+  <div class="nav-drawer" id="nav-drawer">
+    <ul>
+      <li><a href="/#menu">Menu</a></li>
+      <li><a href="/#how">How It Works</a></li>
+      <li><a href="/#about">Our Story</a></li>
+      <li><a href="/#forms">Contact</a></li>
+    </ul>
+    <div class="drawer-actions">
+      <a href="/event-inquiry" class="drawer-event">Plan an Event</a>
+      <a href="/order" class="drawer-order">Order Now</a>
+    </div>
   </div>
 </nav>
 
@@ -906,5 +1014,33 @@
 })();
 </script>
 
+<script>
+  // The dropdown menu. Closes on a link, Escape, or a tap outside it.
+  (function () {
+    var nav = document.querySelector('nav');
+    var toggle = document.querySelector('.nav-toggle');
+    if (!nav || !toggle) return;
+    function setOpen(open) {
+      nav.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    toggle.addEventListener('click', function () {
+      setOpen(!nav.classList.contains('open'));
+    });
+    document.querySelectorAll('.nav-drawer a').forEach(function (link) {
+      link.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && nav.classList.contains('open')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener('click', function (event) {
+      if (nav.classList.contains('open') && !nav.contains(event.target)) setOpen(false);
+    });
+  })();
+</script>
 </body>
 </html>
