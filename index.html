@@ -91,9 +91,24 @@
   }
   .nav-cta:hover { background: var(--teal-deep) !important; }
 
-  @media (max-width: 720px) {
-    .nav-links { gap: 16px; }
+  /* Nothing in the bar may wrap: a two-line "Order Now" spills out of its
+     pill. As the screen narrows the section links go first, then Events,
+     so the two buttons always have room. */
+  .nav-logo, .nav-links a { white-space: nowrap; }
+  @media (max-width: 1000px) {
+    .nav-links { gap: 12px; }
+    .nav-links li:not(:nth-last-child(-n+2)) { display: none; }
+  }
+  @media (max-width: 560px) {
     .nav-links li:not(:last-child) { display: none; }
+  }
+  @media (max-width: 420px) {
+    .nav-inner { padding: 0 18px; gap: 12px; }
+    .nav-cta { padding: 10px 16px; }
+  }
+  @media (max-width: 350px) {
+    .nav-logo { font-size: 16px; }
+    .nav-cta { padding: 9px 12px; letter-spacing: 0.08em !important; }
   }
 
   /* Events sits beside Order Now as an outlined pill: it opens a page of
