@@ -8,8 +8,8 @@
   var API = isLocal ? 'http://localhost:3000' : 'https://dashboard.thesweetspotbykam.com'
 
   // Public by design: both are safe in page source.
-  var SQUARE_APP_ID = 'sandbox-sq0idb-kbI1jXnQe2ssDWAmvFF0AA'
-  var SQUARE_LOCATION_ID = 'L5KR03QHEFNC1'
+  var SQUARE_APP_ID = 'sq0idp-rt7D5J8WskE4U-lrSeEzlg'
+  var SQUARE_LOCATION_ID = 'LQ5MD1N8S2S0R'
 
   var products = []
   var cart = []
